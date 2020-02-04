@@ -1,0 +1,12 @@
+{% extends "index.html.twig" %}
+{% block title %}{{ parent() }} - console admin {% endblock %}
+{% block body %}
+
+    <div class="container-fluid mt-2">
+        <form method="post" action="/Contact/sendMail">
+            <textarea name="content"></textarea>
+            <input type="submit">
+        </form>
+    </div>
+
+{% endblock %}
