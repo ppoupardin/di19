@@ -6,4 +6,5 @@ body {
 .btn-blog {
     color: white;
     background-color: #42affa;
+    margin: 5px;
 }

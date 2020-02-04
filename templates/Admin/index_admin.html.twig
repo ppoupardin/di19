@@ -5,8 +5,8 @@
     <div class="container-fluid mt-2">
         <form method="post" action="/Admin/sendCss">
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Css du blog</label>
-                <textarea class="form-control" id="" name="cssContent" rows="10">{{ cssFileData }}</textarea>
+                <label class="text-primary" for="cssFile">Modification du Css du blog</label>
+                <textarea class="form-control" id="cssFile" name="cssContent" rows="10">{{ cssFileData }}</textarea>
             </div>
             <input type="submit" class="btn btn-blog" value="Soumetre">
         </form>
