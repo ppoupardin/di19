@@ -24,58 +24,150 @@ class __TwigTemplate_127b873b4fba811396dd95a6392a5802a1398a76a883adc0a7827929972
 
         $this->source = $this->getSourceContext();
 
-        $this->blocks = [
-            'title' => [$this, 'block_title'],
-            'body' => [$this, 'block_body'],
-        ];
-    }
+        $this->parent = false;
 
-    protected function doGetParent(array $context)
-    {
-        // line 1
-        return "index.html.twig";
+        $this->blocks = [
+        ];
     }
 
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("index.html.twig", "User/login.html.twig", 1);
-        $this->parent->display($context, array_merge($this->blocks, $blocks));
-    }
+        // line 1
+        echo "<!DOCTYPE html>
 
-    // line 2
-    public function block_title($context, array $blocks = [])
-    {
-        $macros = $this->macros;
-        $this->displayParentBlock("title", $context, $blocks);
-        echo " - Connectez vous ";
-    }
+<html lang=\"en\">
 
-    // line 3
-    public function block_body($context, array $blocks = [])
-    {
-        $macros = $this->macros;
-        // line 4
-        echo "
-    <div class=\"container-fluid mt-2\">
+<head>
+
+    <meta charset=\"UTF-8\">
+
+    <title>PWB-Domo - Connexion</title>
+
+    <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\">
+
+    <link rel=\"stylesheet\" href=\"/Asset/styleinscription&connexion.css\">
+
+</head>
+
+
+
+
+<body id=\"connexion\">
+
+<div class=\"content\">
+
+
+    <div class=\"container\">
+
         ";
-        // line 6
-        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errorlogin", [], "any", true, true, false, 6)) {
-            // line 7
-            echo "            <div class=\"alert alert-danger\">";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errorlogin", [], "any", false, false, false, 7), "html", null, true);
-            echo "</div>
+        // line 27
+        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errorlogin", [], "any", true, true, false, 27)) {
+            // line 28
+            echo "            <div class=\"alert alert-danger\"
+            style=\"position: absolute;
+            width:90%;
+            top:15px;
+            left:5%;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid\">
+                <p style=\"text-align: center\">";
+            // line 36
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errorlogin", [], "any", false, false, false, 36), "html", null, true);
+            echo "</p>
+            </div>
         ";
         }
-        // line 9
-        echo "        <form method=\"post\" action=\"/Login\">
-            <input type=\"email\" name=\"email\">
-            <input type=\"password\" name=\"password\">
-            <input type=\"submit\">
-        </form>
+        // line 39
+        echo "
+
+        <div class=\"menu\">
+
+
+
+
+            <a href=\"login\" class=\"btn-connexion\">
+
+                <h2>Se Connecter</h2>
+
+            </a>
+
+            <a href=\"inscription\" class=\"btn-enregistrer
+active\">
+
+
+                <h2>S'inscrire</h2>
+
+            </a>
+
+        </div>
+
+        <div class=\"connexion\">
+
+
+            <form class=\"contact-form\" name=\"connexion\" method=\"post\" action=\"/Login\">
+
+                <label>Identifiant</label>
+
+                <input name=\"email\" placeholder=\"\" type=\"email\">
+
+
+                <label>Mot de passe</label>
+
+                <input name=\"password\" placeholder=\"\" type=\"password\">
+
+                <div class=\"check\">
+
+                    <label>
+
+                        <input id=\"check\" type=\"checkbox\" class=\"checkbox\">
+
+                        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"26px\" height=\"23px\">
+
+                            <path class=\"path-back\"
+                                  d=\"M1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6\">
+
+                            </path>
+
+                            <path class=\"path-moving\"
+                                  d=\"M24.192,3.813L11.818,16.188L1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6\">
+
+                            </path>
+
+                        </svg>
+
+                    </label>
+
+                    <h3>Restez connecté</h3>
+
+                </div>
+
+                <input class=\"submit\" value=\"Connexion\" type=\"submit\">
+
+            </form>
+
+            <hr>
+
+            <a href=\"https://www.grandvincent-marion.fr/\" target=\"_blank\">
+
+                <h4>Mot de passe Oublié ? </h4>
+
+            </a>
+
+        </div>
+
+
+
     </div>
 
-";
+
+</body>
+
+
+
+
+</html>";
     }
 
     public function getTemplateName()
@@ -90,26 +182,136 @@ class __TwigTemplate_127b873b4fba811396dd95a6392a5802a1398a76a883adc0a7827929972
 
     public function getDebugInfo()
     {
-        return array (  71 => 9,  65 => 7,  63 => 6,  59 => 4,  55 => 3,  47 => 2,  36 => 1,);
+        return array (  83 => 39,  77 => 36,  67 => 28,  65 => 27,  37 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("{% extends \"index.html.twig\" %}
-{% block title %}{{ parent() }} - Connectez vous {% endblock %}
-{% block body %}
+        return new Source("<!DOCTYPE html>
 
-    <div class=\"container-fluid mt-2\">
+<html lang=\"en\">
+
+<head>
+
+    <meta charset=\"UTF-8\">
+
+    <title>PWB-Domo - Connexion</title>
+
+    <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\">
+
+    <link rel=\"stylesheet\" href=\"/Asset/styleinscription&connexion.css\">
+
+</head>
+
+
+
+
+<body id=\"connexion\">
+
+<div class=\"content\">
+
+
+    <div class=\"container\">
+
         {% if session.errorlogin is defined %}
-            <div class=\"alert alert-danger\">{{ session.errorlogin }}</div>
+            <div class=\"alert alert-danger\"
+            style=\"position: absolute;
+            width:90%;
+            top:15px;
+            left:5%;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid\">
+                <p style=\"text-align: center\">{{ session.errorlogin }}</p>
+            </div>
         {% endif %}
-        <form method=\"post\" action=\"/Login\">
-            <input type=\"email\" name=\"email\">
-            <input type=\"password\" name=\"password\">
-            <input type=\"submit\">
-        </form>
+
+
+        <div class=\"menu\">
+
+
+
+
+            <a href=\"login\" class=\"btn-connexion\">
+
+                <h2>Se Connecter</h2>
+
+            </a>
+
+            <a href=\"inscription\" class=\"btn-enregistrer
+active\">
+
+
+                <h2>S'inscrire</h2>
+
+            </a>
+
+        </div>
+
+        <div class=\"connexion\">
+
+
+            <form class=\"contact-form\" name=\"connexion\" method=\"post\" action=\"/Login\">
+
+                <label>Identifiant</label>
+
+                <input name=\"email\" placeholder=\"\" type=\"email\">
+
+
+                <label>Mot de passe</label>
+
+                <input name=\"password\" placeholder=\"\" type=\"password\">
+
+                <div class=\"check\">
+
+                    <label>
+
+                        <input id=\"check\" type=\"checkbox\" class=\"checkbox\">
+
+                        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"26px\" height=\"23px\">
+
+                            <path class=\"path-back\"
+                                  d=\"M1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6\">
+
+                            </path>
+
+                            <path class=\"path-moving\"
+                                  d=\"M24.192,3.813L11.818,16.188L1.5,6.021V2.451C1.5,2.009,1.646,1.5,2.3,1.5h18.4c0.442,0,0.8,0.358,0.8,0.801v18.398c0,0.442-0.357,0.801-0.8,0.801H2.3c-0.442,0-0.8-0.358-0.8-0.801V6\">
+
+                            </path>
+
+                        </svg>
+
+                    </label>
+
+                    <h3>Restez connecté</h3>
+
+                </div>
+
+                <input class=\"submit\" value=\"Connexion\" type=\"submit\">
+
+            </form>
+
+            <hr>
+
+            <a href=\"https://www.grandvincent-marion.fr/\" target=\"_blank\">
+
+                <h4>Mot de passe Oublié ? </h4>
+
+            </a>
+
+        </div>
+
+
+
     </div>
 
-{% endblock %}", "User/login.html.twig", "C:\\Users\\langl\\Desktop\\Cours\\Projets\\BlogPHP\\templates\\User\\login.html.twig");
+
+</body>
+
+
+
+
+</html>", "User/login.html.twig", "C:\\Users\\langl\\Desktop\\Cours\\Projets\\BlogPHP\\templates\\User\\login.html.twig");
     }
 }

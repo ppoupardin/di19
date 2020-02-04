@@ -40,6 +40,8 @@ $router->post('/Login', 'User#loginCheck');
 $router->get('/Logout', 'User#logout');
 $router->get('/Admin', 'Admin#index');
 $router->post('/Admin/sendCss', 'Admin#sendCss');
+$router->get('/Inscription', 'User#inscriptionForm');
+$router->post('/Inscription', 'User#inscriptionCheck');
 
 
 echo $router->run();

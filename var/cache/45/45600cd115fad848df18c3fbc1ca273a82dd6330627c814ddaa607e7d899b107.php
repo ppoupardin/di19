@@ -48,7 +48,7 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 
     <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\">
 
-    <link rel=\"stylesheet\" href=\"/Asset/styleinscription.css\">
+    <link rel=\"stylesheet\" href=\"/Asset/styleinscription&connexion.css\">
 
 </head>
 
@@ -57,7 +57,7 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 ";
         // line 20
         $this->displayBlock('body', $context, $blocks);
-        // line 112
+        // line 125
         echo "
 
 
@@ -76,10 +76,31 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 
         <div class=\"container\">
 
+            ";
+        // line 27
+        if (twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errinscription", [], "any", true, true, false, 27)) {
+            // line 28
+            echo "                <div class=\"alert alert-danger\"
+                     style=\"position: absolute;
+            width:90%;
+            top:15px;
+            left:5%;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid\">
+                    <p style=\"text-align: center\">";
+            // line 36
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "errinscription", [], "any", false, false, false, 36), "html", null, true);
+            echo "</p>
+                </div>
+            ";
+        }
+        // line 39
+        echo "
 
             <div class=\"menu\">
 
-                <a href=\"connexion\" class=\"btn-enregistrer
+                <a href=\"login\" class=\"btn-enregistrer
                 active\">
 
 
@@ -170,7 +191,7 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 
     public function getDebugInfo()
     {
-        return array (  73 => 21,  69 => 20,  61 => 112,  59 => 20,  38 => 1,);
+        return array (  99 => 39,  93 => 36,  83 => 28,  81 => 27,  73 => 21,  69 => 20,  61 => 125,  59 => 20,  38 => 1,);
     }
 
     public function getSourceContext()
@@ -188,7 +209,7 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 
     <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\">
 
-    <link rel=\"stylesheet\" href=\"/Asset/styleinscription.css\">
+    <link rel=\"stylesheet\" href=\"/Asset/styleinscription&connexion.css\">
 
 </head>
 
@@ -201,10 +222,23 @@ class __TwigTemplate_b4bfdacba71500995318f37a5db467329b572044d9bf756f6fc7da1056c
 
         <div class=\"container\">
 
+            {% if session.errinscription is defined %}
+                <div class=\"alert alert-danger\"
+                     style=\"position: absolute;
+            width:90%;
+            top:15px;
+            left:5%;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid\">
+                    <p style=\"text-align: center\">{{ session.errinscription }}</p>
+                </div>
+            {% endif %}
+
 
             <div class=\"menu\">
 
-                <a href=\"connexion\" class=\"btn-enregistrer
+                <a href=\"login\" class=\"btn-enregistrer
                 active\">
 
 

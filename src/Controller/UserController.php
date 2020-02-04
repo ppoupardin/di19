@@ -1,11 +1,16 @@
 <?php
 namespace src\Controller;
 
+use src\Model\Bdd;
+use src\Model\User;
+
 class UserController extends  AbstractController {
 
     public function loginForm(){
-        var_dump($_SESSION['errorlogin']);
         return $this->twig->render('User/login.html.twig');
+    }
+    public function inscriptionForm(){
+        return $this->twig->render('User/inscription.html.twig');
     }
 
     public function loginCheck(){
@@ -17,13 +22,13 @@ class UserController extends  AbstractController {
                 "options" => array("regexp"=>"/[a-zA-Z]{3,}/")
             )
         )){
-            $_SESSION['errorlogin'] = "Mpd mini 3 caractères";
+            $_SESSION['errorlogin'] = "Le mot de passe ne peut être inférieur à 3 caractères";
             header('Location:/Login');
             return;
         }
 
         if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
-            $_SESSION['errorlogin'] = "Mail invalide";
+            $_SESSION['errorlogin'] = "Adresse Email invalide";
             header('Location:/Login');
             return;
         }
@@ -39,12 +44,64 @@ class UserController extends  AbstractController {
             );
             header('Location:/');
         }else{
-            $_SESSION['errorlogin'] = "Erreur Authent.";
+            $_SESSION['errorlogin'] = "Erreur d'authentification";
             header('Location:/Login');
         }
+    }
+
+    public function logout(){
+        unset($_SESSION['login']);
+        unset($_SESSION['errorlogin']);
+
+        header('Location:/');
+    }
+
+    public function InscriptionCheck()
+    {
+        if ($_POST) {
+            $errMsg='';
+
+            if(!filter_var(
+                $_POST['password'],
+                FILTER_VALIDATE_REGEXP,
+                array(
+                    "options" => array("regexp"=>"/[a-zA-Z]{3,}/")
+                )
+            )){
+                $_SESSION['errinscription'] = "Le mot de passe ne peut être inférieur à 3 caractères";
+                header('Location:/Inscription');
+                unset($_SESSION['errinscription']);
+                return;
+            }
 
 
+            if ($errMsg != '') {
+                header('Location:/inscription');
+            }
 
+            else{
+
+                $options = [
+                    'salt' => md5(strtolower($_POST['Email'])),
+                    'cost' => 12 // the default cost is 10
+                ];
+                define('PEPPER', sha1(strtolower($_POST['Email'])));
+                $pwd_hashed = password_hash(($_POST['Password']) . PEPPER, PASSWORD_DEFAULT, $options);
+
+                $user = new User();
+                $user->setUtiprenom($_POST["Prenom"]);
+                $user->setUtinom($_POST["Nom"]);
+                $user->setUtimail(strtolower($_POST['Email']));
+                $user->setUtipassword($pwd_hashed);
+                $user->SqlAdd(Bdd::GetInstance());
+                unset($_SESSION['errinscription']);
+                header('Location:/');
+
+            }
+        } else {
+            return $this->twig->render("User/inscription.html.twig");
+
+        }
     }
 
     public static function roleNeed($roleATester){
@@ -57,13 +114,6 @@ class UserController extends  AbstractController {
             $_SESSION['errorlogin'] = "Veuillez vous identifier";
             header('Location:/Login');
         }
-    }
-
-    public function logout(){
-        unset($_SESSION['login']);
-        unset($_SESSION['errorlogin']);
-
-        header('Location:/');
     }
 
 }

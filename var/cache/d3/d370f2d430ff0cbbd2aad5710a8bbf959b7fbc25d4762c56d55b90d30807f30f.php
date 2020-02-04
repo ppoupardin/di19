@@ -139,7 +139,7 @@ class __TwigTemplate_febb1ea8f68a7de33f066de1b77f1030075787fd274205d5d132c295a87
     public function block_title($context, array $blocks = [])
     {
         $macros = $this->macros;
-        echo "CESI BLOG";
+        echo "TP - BLOG PHP";
     }
 
     // line 10
@@ -181,7 +181,7 @@ class __TwigTemplate_febb1ea8f68a7de33f066de1b77f1030075787fd274205d5d132c295a87
 <html lang=\"fr\">
 <head>
     <meta charset=\"utf-8\">
-    <title>{% block title %}CESI BLOG{% endblock %}</title>
+    <title>{% block title %}TP - BLOG PHP{% endblock %}</title>
     <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">
     <link rel=\"stylesheet\" href=\"https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/pepper-grinder/jquery-ui.css\">
     <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.8.1/css/all.css\">
