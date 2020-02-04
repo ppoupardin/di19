@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 04 fév. 2020 à 11:37
+-- Généré le :  mar. 04 fév. 2020 à 11:48
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP :  7.4.1
 
@@ -77,7 +77,8 @@ CREATE TABLE `utilisateur` (
   `uti_prenom` varchar(50) NOT NULL,
   `uti_token` varchar(64) DEFAULT NULL,
   `uti_role` int(11) DEFAULT NULL,
-  `uti_status` int(11) NOT NULL DEFAULT 0
+  `uti_status` int(11) NOT NULL DEFAULT 0,
+  `uti_password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
