@@ -2,4 +2,5 @@
 /vendor
 /cache
 /var
+/var/cache
 composer.lock

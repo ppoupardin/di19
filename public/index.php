@@ -17,7 +17,9 @@ function chargerClasse($classe){
 spl_autoload_register('chargerClasse');
 
 $router = new \src\Router\Router($_GET['url']);
+// Index
 $router->get('/', "Article#ListAll");
+// Article
 $router->get('/Article', "Article#ListAll");
 $router->get('/Article/Update/:id', "Article#Update#id");
 $router->post('/Article/Update/:id', "Article#Update#id");
@@ -28,18 +30,23 @@ $router->get('/Article/Fixtures', "Article#Fixtures");
 $router->get('/Article/Write', "Article#Write");
 $router->get('/Article/Read', "Article#Read");
 $router->get('/Article/WriteOne/:id', "Article#Read#id");
+$router->get('/Article/ListAll','Article#listAll');
+// Api
 $router->get('/Api/Article', "Api#ArticleGet");
 $router->post('/Api/Article', "Api#ArticlePost");
 $router->put('/Api/Article/:id/:json', "Api#ArticlePut#id#json");
-$router->get('/Article/ListAll','Article#listAll');
 $router->get('/coucou/di/:param1/:param2','Article#test#param1#param2');
+// Formulaire contact
 $router->get('/Contact', 'Contact#showForm');
 $router->post('/Contact/sendMail', 'Contact#sendMail');
+// connexion
 $router->get('/Login', 'User#loginForm');
 $router->post('/Login', 'User#loginCheck');
 $router->get('/Logout', 'User#logout');
+// Admin
 $router->get('/Admin', 'Admin#index');
 $router->post('/Admin/sendCss', 'Admin#sendCss');
+// Inscription
 $router->get('/Inscription', 'User#inscriptionForm');
 $router->post('/Inscription', 'User#inscriptionCheck');
 

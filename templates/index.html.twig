@@ -66,11 +66,13 @@
 {% block javascript %}
 <script>
     $(function() {
+        //initialisation syntax color textarea
         editAreaLoader.init({
             id : "textarea_1"		// textarea id
             ,syntax: "css"			// syntax to be uses for highgliting
             ,start_highlight: true		// to display with highlight mode on start-up
         });
+        //fonction pour enlever la toolbar de la lib "edit_area" 200ms après le chargement
         function fEALoaded() {
             $('#frame_textarea_1').contents().find('.area_toolbar').hide();
             $('#EditAreaArroundInfos_textarea_1').hide();
