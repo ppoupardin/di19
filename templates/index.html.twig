@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}PWB BLOG{% endblock %}</title>
+    <title>{% block title %}PWB Domo BLOG{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/pepper-grinder/jquery-ui.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -11,22 +11,28 @@
 </head>
 
 <body>
+
     <!--Barre de navigation>-->
 <nav class="navbar sticky-top nav-pills navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/Connexion-Inscription/">Blog de PWB</a>
+    <a class="navbar-brand" href="/Article/ListAll">Blog de PWB Domo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="/Connexion-Inscription">Mon compte</a>
+                <a class="nav-link" href="/Login">Connexion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Article/Add">Ajout d'un article</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Admin">Administrateur</a>
             </li>
         </ul>
 
         <!--liste déroulante de catégories dans la Recherche -->
-        <form class="form-inline" method="post" action="/Catégorie/Show/{{ post.search }}">
-
+        <form class="form-inline" method="search" action="/Catégorie/Show/{{ post.search }}">
             <select name="Catégorie" id="catégo-select">
                 <option value="Toutes les catégories">Toutes les catégories</option>
                 <option value="Alarme">Alarme</option>
@@ -34,8 +40,10 @@
                 <option value="Détecteur">Détecteur</option>
                 <option value="Chauffage">Chauffage</option>
                 <option value="Motorisation">Motorisation</option>
+                <option value="Electro">Electroménager</option>
+                <option value="EquipExté">Equipement d'extérieur</option>
             </select>
-            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Selection" name="searchSubmit">
+            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="OK" name="searchSubmit">
         </form>
 </nav>
 

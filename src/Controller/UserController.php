@@ -54,7 +54,7 @@ class UserController extends  AbstractController {
                 header('Location:/Contact');
             }
         }else{
-            $_SESSION['errorlogin'] = "Veuillez vous identifier";
+            $_SESSION['errorlogin'] = "Veuillez-vous identifier";
             header('Location:/Login');
         }
     }
