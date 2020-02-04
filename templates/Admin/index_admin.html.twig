@@ -3,7 +3,7 @@
 {% block body %}
 
     <div class="container-fluid mt-2">
-        <form method="post" action="/Admin/sendCss">
+        <form method="post" class="col-lg-6" action="/Admin/sendCss">
             <div class="form-group">
                 <label class="text-primary" for="textarea_1">Modification du Css du blog</label>
                 <textarea class="form-control" id="textarea_1" name="cssContent" rows="10">{{ cssFileData }}</textarea>
