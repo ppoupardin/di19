@@ -182,4 +182,21 @@ class User implements \JsonSerializable
         }
         return $emailUsers;
     }
+
+    public function SqlGetLogin(\PDO $bdd , $emailuser){
+        $query = $bdd->prepare('SELECT uti_password,id_uti FROM utilisateur WHERE uti_mail = :useremail');
+        $query->execute([
+            'useremail' => $emailuser
+        ]);
+
+        $UserInfoLog = $query->fetch();
+        $user = new User();
+        $user->setUtipassword($UserInfoLog['uti_password']);
+        $user->setIduti($UserInfoLog['id_uti']);
+
+        $UserInfoLog[] = $user;
+
+        return $UserInfoLog;
+    }
+
 }
