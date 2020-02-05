@@ -28,28 +28,29 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Inscription">Inscription</a>
             </li>
-            {% if session.errorlogin is defined %}
-                {% if session.errologin != "vous n'êtes pas redacteur" %}
+            {% if session.login is defined %}
+            {% for role in session.login.roles %}
+                {% if role == "redacteur" %}
             <li class="nav-item">
                 <a class="nav-link" href="/Article/Add">Ajout d'un article</a>
             </li>
-                {% endif %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-            {% if session.errorlogin is defined %}
-                {% if session.errorlogin != "vous n'êtes pas administrateur" %}
+            {% if session.login is defined %}
+            {% for role in session.login.roles %}
+                {% if role == "administrateur" %}
             <li class="nav-item">
                 <a class="nav-link" href="/Admin">Administrateur</a>
             </li>
                     {% endif %}
+                {% endfor %}
             {% endif %}
+            {% if session.login is defined %}
             <li class="nav-item">
                 <a class="nav-link" href="/Logout">Déconnexion</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Logout">{{ session.errorlogin }} </a>
-            </li>
-
-
+            {% endif %}
         </ul>
 
         <!--liste déroulante de catégories dans la Recherche -->
