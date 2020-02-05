@@ -8,6 +8,7 @@ class AdminController extends AbstractController {
         $file='master.css';
         $dataCss = file_get_contents('./asset/css/'.$file);
         return $this->twig->render('Admin/index_admin.html.twig', [
+            //contenu du fichier css envoyé dans la vue
             'cssFileData' => $dataCss
         ]);
     }

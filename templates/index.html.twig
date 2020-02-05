@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/pepper-grinder/jquery-ui.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
     <link rel="stylesheet" href="./asset/css/master.css">
     {% block css %}{% endblock %}
 </head>
@@ -62,8 +63,27 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-{% block javascript %}{% endblock %}
+<script language="javascript" type="text/javascript" src="/asset/librairies/editarea/edit_area/edit_area_full.js"></script>
+{% block javascript %}
+<script>
+    $(function() {
+        //initialisation syntax color textarea
+        editAreaLoader.init({
+            id : "textarea_1"		// textarea id
+            ,syntax: "css"			// syntax to be uses for highgliting
+            ,start_highlight: true		// to display with highlight mode on start-up
+        });
+        //fonction pour enlever la toolbar de la lib "edit_area" 200ms après le chargement
+        function fEALoaded() {
+            $('#frame_textarea_1').contents().find('.area_toolbar').hide();
+            $('#EditAreaArroundInfos_textarea_1').hide();
+        }
+        setTimeout(function(){ fEALoaded(); }, 200);
+    });
+</script>
+{% endblock %}
 
 </body>
 </html>
