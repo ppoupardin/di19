@@ -18,6 +18,7 @@ class UserController extends  AbstractController {
     public function loginCheck()
     {
 
+
         if ($_POST['email'] == '') {
             $_SESSION['errorlogin'] = "Veuillez entrer une adresse Email";
             header('Location:/Login');
@@ -39,7 +40,11 @@ class UserController extends  AbstractController {
         $user = new User();
         $userInfoLog = $user->SqlGetLogin(Bdd::GetInstance(), ($_POST['email']));
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
-
+        if($userInfoLog['uti_status']==0){
+            $_SESSION['errorlogin'] = "votre compte n'a pas été approuvé par un administrateur";
+            header('Location:/Login');
+            return;
+        }
         if ($pwd_hashed_entry == $pwd_hashed_bdd) {
             $_SESSION['login'] = array("id"=>$userInfoLog['id_uti'],
                                         "roles"=>array("redacteur","administrateur"));
