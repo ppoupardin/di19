@@ -50,6 +50,11 @@ $router->post('/Admin/sendCss', 'Admin#sendCss');
 // Inscription
 $router->get('/Inscription', 'User#inscriptionForm');
 $router->post('/Inscription', 'User#inscriptionCheck');
+// Categorie
+$router->post('/Categorie/delete/:id', 'Categorie#Delete#id');
+$router->post('/Categorie/update/:id', 'Categorie#update#id');
+$router->get('/Categorie/update/:id', 'Categorie#update#id');
+$router->post('/Categorie/add', 'Categorie#add');
 
 
 echo $router->run();

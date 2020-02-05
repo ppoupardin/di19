@@ -1,16 +1,62 @@
 {% extends "index.html.twig" %}
 {% block title %}{{ parent() }} - console admin {% endblock %}
 {% block body %}
-
     <div class="container-fluid mt-2">
-        <!-- Formulaire de modif du css en ligne -->
-        <form method="post" class="col-lg-6" action="/Admin/sendCss">
-            <div class="form-group">
-                <label class="text-primary" for="textarea_1">Modification du Css du blog</label>
-                <textarea class="form-control" id="textarea_1" name="cssContent" rows="10">{{ cssFileData }}</textarea>
+        <div class="row py-4 ml-2">
+            <div class="col-lg-4 mx-auto card p-2" id="categories" >
+                <label class="text-primary text-center"><h3>Liste catégories article</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom catégorie</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for categorie in listCategorie %}
+                        <tr>
+                            <th scope="row"> {{ categorie.idCat }}</th>
+                            <td>{{ categorie.categories }}</td>
+                            <td class="row">
+                                <form action="/Categorie/delete/{{  categorie.idCat }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                                <form action="/Categorie/update/{{  categorie.idCat }}" method="post">
+                                    <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <form action="/Categorie/add" method="post">
+                            <th scope="row">#</th>
+                            <td><input required type="text" name="categorie" placeholder="Nouvelle catégorie"></td>
+                            <td>
+                                <button type="submit" class="btn btn-success"><i class="far fa-check-square"> Ajouter</i></button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <input type="submit" class="btn btn-blog" value="Soumettre">
-        </form>
+            <div class="col-lg-3 mx-auto card p-2" id="subscripbConfirm">
+                <!-- Formulaire de confirmation inscription -->
+                <label class="text-primary  text-center" for=""><h3>Confirmations inscription</h3></label>
+
+            </div>
+            <div class="col-lg-4 mx-auto card p-2" id="cssModifier">
+                <!-- Formulaire de modif du css en ligne -->
+                <form method="post" class="" action="/Admin/sendCss">
+                    <div class="form-group">
+                        <label class="text-primary text-center" for="textarea_1"><h3>Modification du Css du blog</h3></label>
+                        <textarea class="form-control" id="textarea_1" name="cssContent" rows="10">{{ cssFileData }}</textarea>
+                    </div>
+                    <input type="submit" class="btn btn-blog" value="Soumettre">
+                </form>
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}

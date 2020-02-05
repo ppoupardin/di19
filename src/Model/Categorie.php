@@ -30,8 +30,8 @@ class Categorie implements \JsonSerializable {
         $listCategorie = [];
         foreach ($arrayCategorie as $categorieSQL){
             $categorie = new Categorie();
-            $categorie->setId($categorieSQL['id_cat']);
-            $categorie->setTitre($categorieSQL['cat_libelle']);
+            $categorie->setIdCat($categorieSQL['id_cat']);
+            $categorie->setCategories($categorieSQL['cat_libelle']);
 
             $listCategorie[] = $categorie;
         }
@@ -45,10 +45,9 @@ class Categorie implements \JsonSerializable {
         ]);
 
         $datas =  $requete->fetch();
-
-        $categorie = new Article();
-        $categorie->setIdCat($datas['Id']);
-        $categorie->setCategories($datas['Titre']);
+        $categorie = new Categorie();
+        $categorie->setIdCat($datas['id_cat']);
+        $categorie->setCategories($datas['cat_libelle']);
 
         return $categorie;
     }
