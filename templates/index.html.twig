@@ -16,7 +16,7 @@
 
     <!--Barre de navigation>-->
 <nav class="navbar sticky-top nav-pills navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/Article/ListAll">Blog de PWB Domo</a>
+    <a class="navbar-brand" href="/Article/LastFive">Blog de PWB Domo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,7 +55,8 @@
 
         <!--liste déroulante de catégories dans la Recherche -->
         <form class="form-inline" method="search" action="/Catégorie/Show/{{ post.search }}">
-            <select name="Catégorie" id="catégo-select">
+            <select name="Catégorie" id="listCategorie">
+                <option value="0">-- Recherche de catégorie --</option>
                 <option value="Toutes les catégories">Toutes les catégories</option>
                 <option value="Alarme">Alarme</option>
                 <option value="Eclairage">Eclairage</option>
@@ -68,6 +69,9 @@
             <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="OK" name="searchSubmit">
         </form>
 </nav>
+
+
+
 
 
     {% block body %}{% endblock %}

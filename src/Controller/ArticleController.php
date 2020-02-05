@@ -12,17 +12,27 @@ class ArticleController extends AbstractController {
     }
 
     public function ListAll(){
+    $article = new Article();
+    $listArticle = $article->SqlGetAll(Bdd::GetInstance());
+
+    //Lancer la vue TWIG
+    return $this->twig->render(
+        'Article/list.html.twig',[
+            'articleList' => $listArticle
+        ]
+    );
+}
+    public function GetLastFive(){
         $article = new Article();
-        $listArticle = $article->SqlGetAll(Bdd::GetInstance());
+        $lastfiveArticle = $article->SqlGetLastFive(Bdd::GetInstance());
 
         //Lancer la vue TWIG
         return $this->twig->render(
             'Article/list.html.twig',[
-                'articleList' => $listArticle
+                'articleList' => $lastfiveArticle
             ]
         );
     }
-
     public function add(){
         UserController::roleNeed('redacteur');
         if($_POST AND $_SESSION['token'] == $_POST['token']){

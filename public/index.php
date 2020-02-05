@@ -21,6 +21,7 @@ $router = new \src\Router\Router($_GET['url']);
 $router->get('/', "Article#ListAll");
 // Article
 $router->get('/Article', "Article#ListAll");
+$router->get('/Article/LastFive', "Article#GetLastFive");
 $router->get('/Article/Update/:id', "Article#Update#id");
 $router->post('/Article/Update/:id', "Article#Update#id");
 $router->get('/Article/Add', "Article#Add");
