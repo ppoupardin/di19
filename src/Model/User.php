@@ -169,16 +169,16 @@ class User implements \JsonSerializable
 
     public function SqlGetAllEmail(\PDO $bdd){
 
-        $query = $bdd->prepare("SELECT uti_mail FROM utilisateur WHERE uti_status='1'");
+        $query = $bdd->prepare("SELECT uti_mail FROM utilisateur");
         $query->execute();
         $arrayUser = $query->fetchAll();
 
         $emailUsers = [];
         foreach ($arrayUser as $userSQL){
             $user = new User();
-            $user->setUtimail(strtolower($userSQL['USER_EMAIL']));
+            $user->setUtimail(strtolower($userSQL['uti_mail']));
 
-            $emailUsers[] = $user;
+            $emailUsers[] = $user->getUtimail();
         }
         return $emailUsers;
     }
