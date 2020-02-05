@@ -18,13 +18,14 @@ class CategorieController extends AbstractController {
     }
 
     public function add(){
-        UserController::roleNeed('admin');
-        if($_POST AND $_SESSION['token'] == $_POST['token']){
+        UserController::roleNeed('administrateur');
+        //if($_POST AND $_SESSION['token'] == $_POST['token']){
+        if($_POST){
 
             $categorie = new Categorie();
-            $categorie->setCategories();
+            $categorie->setCategories($_POST['categorie']);
             $categorie->SqlAdd(BDD::getInstance());
-            header('Location:/Categorie');
+            header('Location:/Admin');
         }else{
             // Génération d'un TOKEN
             $token = bin2hex(random_bytes(32));
@@ -53,6 +54,7 @@ class CategorieController extends AbstractController {
     }
 
     public function Delete($categorieID){
+
         $categorieSQL = new Categorie();
         $categorie = $categorieSQL->SqlGet(BDD::getInstance(),$categorieID);
         $categorie->SqlDelete(BDD::getInstance(),$categorieID);
