@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 04 fév. 2020 à 11:48
+-- Généré le :  mer. 05 fév. 2020 à 11:51
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP :  7.4.1
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `pwb-domo`
+-- Base de données :  `pwb_domo`
 --
 
 -- --------------------------------------------------------
@@ -76,10 +76,17 @@ CREATE TABLE `utilisateur` (
   `uti_nom` varchar(50) NOT NULL,
   `uti_prenom` varchar(50) NOT NULL,
   `uti_token` varchar(64) DEFAULT NULL,
-  `uti_role` int(11) DEFAULT NULL,
+  `uti_role` varchar(250) DEFAULT NULL,
   `uti_status` int(11) NOT NULL DEFAULT 0,
   `uti_password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id_uti`, `uti_mail`, `uti_nom`, `uti_prenom`, `uti_token`, `uti_role`, `uti_status`, `uti_password`) VALUES
+(6, 'langlois.william.pro@gmail.com', 'Langlois', 'William', NULL, NULL, 0, '$2y$12$4ea190ac3aef045c7c7baub3qzdhIBg3zxbWmN.Ccvc7/Tab3/uHu');
 
 --
 -- Index pour les tables déchargées
@@ -135,7 +142,7 @@ ALTER TABLE `commentaires`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
