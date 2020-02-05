@@ -41,8 +41,13 @@ class UserController extends  AbstractController {
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
 
         if ($pwd_hashed_entry == $pwd_hashed_bdd) {
+            $arrayRole = explode(" ", $userInfoLog['uti_role']);
             $_SESSION['login'] = array("id"=>$userInfoLog['id_uti'],
-                                        "roles"=>array("redacteur","administrateur"));
+                                        "roles"=>$arrayRole,
+                                        "Prenom"=>$userInfoLog['uti_prenom'],
+                                        "Nom"=>$userInfoLog['uti_nom'],
+                                        "Status"=>$userInfoLog['uti_status']);
+            //die(var_dump($_SESSION));
             header('Location:/');
         } else {
             $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
