@@ -198,4 +198,17 @@ class UserController extends  AbstractController {
         }
     }
 
+    public function accept($idUser){
+        UserController::roleNeed('administrateur');
+        $UserSQL = new User();
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,1);
+        header('Location:/Admin');
+    }
+
+    public function refused($idUser){
+        UserController::roleNeed('administrateur');
+        $UserSQL = new User();
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,2);
+        header('Location:/Admin');
+    }
 }

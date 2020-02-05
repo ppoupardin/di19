@@ -54,6 +54,10 @@ $router->post('/Categorie/delete/:id', 'Categorie#Delete#id');
 $router->post('/Categorie/update/:id', 'Categorie#update#id');
 $router->get('/Categorie/update/:id', 'Categorie#update#id');
 $router->post('/Categorie/add', 'Categorie#add');
+// User
+$router->post('/User/Accept/:id', 'User#accept#id');
+$router->post('/User/Refused/:id', 'User#refused#id');
+
 
 
 echo $router->run();

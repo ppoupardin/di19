@@ -3,8 +3,8 @@
 {% block body %}
     <div class="container-fluid mt-2">
         <div class="row py-4 ml-2">
-            <div class="col-lg-4 mx-auto card p-2" id="categories" >
-                <label class="text-primary text-center"><h3>Liste catégories article</h3></label>
+            <div class="col-lg-4 mx-auto card p-0" id="categories" >
+                <label class="text-primary text-center p-2"><h3>Liste catégories article</h3></label>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -43,10 +43,39 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-3 mx-auto card p-2" id="subscripbConfirm">
+            <div class="col-lg-3 mx-auto card p-0" id="subscripbConfirm">
                 <!-- Formulaire de confirmation inscription -->
-                <label class="text-primary  text-center" for=""><h3>Confirmations inscription</h3></label>
-
+                <label class="text-primary p-2 text-center" for=""><h3>Confirmations inscription</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Prenom</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Accepter</th>
+                            <th scope="col">Refuser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for mail in listMail %}
+                        <tr>
+                            <td>{{ mail.utiprenom }}</td>
+                            <td>{{ mail.utinom }}</td>
+                            <td>{{ mail.utimail }}</td>
+                            <td>
+                                <form action="/User/Accept/{{ mail.iduti }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-success"><i class="far fa-check-square"></i></button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/User/Refused/{{ mail.iduti }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
             <div class="col-lg-4 mx-auto card p-2" id="cssModifier">
                 <!-- Formulaire de modif du css en ligne -->
