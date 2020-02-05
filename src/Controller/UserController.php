@@ -40,24 +40,26 @@ class UserController extends  AbstractController {
         $user = new User();
         $userInfoLog = $user->SqlGetLogin(Bdd::GetInstance(), ($_POST['email']));
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
-        if($userInfoLog['uti_status']==0){
+        if($userInfoLog['uti_status']=='0'){
             $_SESSION['errorlogin'] = "votre compte n'a pas été approuvé par un administrateur";
             header('Location:/Login');
             return;
         }
-        if ($pwd_hashed_entry == $pwd_hashed_bdd) {
-            $arrayRole = explode(" ", $userInfoLog['uti_role']);
-            $_SESSION['login'] = array("id"=>$userInfoLog['id_uti'],
-                                        "roles"=>$arrayRole,
-                                        "Prenom"=>$userInfoLog['uti_prenom'],
-                                        "Nom"=>$userInfoLog['uti_nom'],
-                                        "Status"=>$userInfoLog['uti_status']);
-            //die(var_dump($_SESSION));
-            header('Location:/');
-        } else {
-            $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
-            header('Location:/Login');
-            return;
+        else {
+            if ($pwd_hashed_entry == $pwd_hashed_bdd) {
+                $arrayRole = explode(" ", $userInfoLog['uti_role']);
+                $_SESSION['login'] = array("id" => $userInfoLog['id_uti'],
+                    "roles" => $arrayRole,
+                    "Prenom" => $userInfoLog['uti_prenom'],
+                    "Nom" => $userInfoLog['uti_nom'],
+                    "Status" => $userInfoLog['uti_status']);
+                //die(var_dump($_SESSION));
+                header('Location:/');
+            } else {
+                $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
+                header('Location:/Login');
+                return;
+            }
         }
     }
 
