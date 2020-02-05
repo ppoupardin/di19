@@ -21,44 +21,32 @@ class CategorieController extends AbstractController {
         UserController::roleNeed('administrateur');
         //if($_POST AND $_SESSION['token'] == $_POST['token']){
         if($_POST){
-
             $categorie = new Categorie();
             $categorie->setCategories($_POST['categorie']);
             $categorie->SqlAdd(BDD::getInstance());
             header('Location:/Admin');
-        }else{
-            // Génération d'un TOKEN
-            $token = bin2hex(random_bytes(32));
-            $_SESSION['token'] = $token;
-            return $this->twig->render('Categorie/add.html.twig',
-                [
-                    'token' => $token
-                ]);
         }
     }
 
     public function update($categorieID){
+        UserController::roleNeed('administrateur');
         $categorieSQL = new Categorie();
         $categorie = $categorieSQL->SqlGet(BDD::GetInstance(),$categorieID);
+        //if($_POST AND $_SESSION['token'] == $_POST['token']){
         if($_POST){
-
-            $categorie->setCategories($_POST['categorie'])
-            ;
-
+            $categorie->setCategories($_POST['categorie']);
             $categorie->SqlUpdate(BDD::getInstance());
+            header('Location:/Admin');
         }
-
-        return $this->twig->render('Categorie/update.html.twig',[
-            'article' => $article
-        ]);
     }
 
     public function Delete($categorieID){
-
-        $categorieSQL = new Categorie();
-        $categorie = $categorieSQL->SqlGet(BDD::getInstance(),$categorieID);
-        $categorie->SqlDelete(BDD::getInstance(),$categorieID);
-
+        UserController::roleNeed('administrateur');
+        //if($_POST AND $_SESSION['token'] == $_POST['token']){
+            $categorieSQL = new Categorie();
+            $categorie = $categorieSQL->SqlGet(BDD::getInstance(),$categorieID);
+            $categorie->SqlDelete(BDD::getInstance(),$categorieID);
+        //]
         header('Location:/Admin');
     }
 
