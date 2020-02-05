@@ -34,6 +34,7 @@ $router->get('/Article/WriteOne/:id', "Article#Read#id");
 $router->get('/Article/ListAll','Article#listAll');
 // Api
 $router->get('/Api/Article', "Api#ArticleGet");
+$router->get('/Api/Article/LastFive', "Api#ArticleGetLastFive");
 $router->post('/Api/Article', "Api#ArticlePost");
 $router->put('/Api/Article/:id/:json', "Api#ArticlePut#id#json");
 // Formulaire contact
