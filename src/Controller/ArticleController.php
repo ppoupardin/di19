@@ -181,9 +181,4 @@ class ArticleController extends AbstractController {
         header('location:/Article/');
     }
 
-    public function test($param1,$param2){
-        var_dump($param1);
-        var_dump($param2);
-    }
-
 }
