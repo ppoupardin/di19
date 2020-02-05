@@ -32,6 +32,9 @@ $router->get('/Article/Write', "Article#Write");
 $router->get('/Article/Read', "Article#Read");
 $router->get('/Article/WriteOne/:id', "Article#Read#id");
 $router->get('/Article/ListAll','Article#listAll');
+// Article - confirmation
+$router->post('/Article/Accept/:id', 'Article#accept#id');
+$router->post('/Article/Refused/:id', 'Article#refused#id');
 // Api
 $router->get('/Api/Article', "Api#ArticleGet");
 $router->post('/Api/Article', "Api#ArticlePost");

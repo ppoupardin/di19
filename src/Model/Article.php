@@ -14,6 +14,19 @@ class Article extends Contenu implements \JsonSerializable {
         return implode(" ",array_slice($arrayWord,0,$nb));
     }
 
+    public function SqlUpdateStatus(\PDO $bdd, $idArticle,$status) {
+        try{
+            $requete = $bdd->prepare('UPDATE articles set Status=:status WHERE Id=:id_article');
+            $requete->execute([
+                'status' => $status
+                ,'id_article' => $idArticle
+            ]);
+            return array("0", "[OK] Update");
+        }catch (\Exception $e){
+            return array("1", "[ERREUR] ".$e->getMessage());
+        }
+    }
+
 
     public function SqlAdd(\PDO $bdd) {
         try{
@@ -52,8 +65,6 @@ class Article extends Contenu implements \JsonSerializable {
                 $listArticle[] = $article;
             }
             return $listArticle;
-
-
     }
 
     public function SqlGetLastFive(\PDO $bdd)
@@ -76,6 +87,27 @@ class Article extends Contenu implements \JsonSerializable {
             $lastfiveArticle[] = $article;
         }
         return $lastfiveArticle;
+    }
+
+    public function SqlGetAllWaiting(\PDO $bdd){
+        $requete = $bdd->prepare('SELECT * FROM articles WHERE Status=0');
+        $requete->execute();
+        $arrayArticle = $requete->fetchAll();
+
+        $listArticle = [];
+        foreach ($arrayArticle as $articleSQL){
+            $article = new Article();
+            $article->setId($articleSQL['Id']);
+            $article->setTitre($articleSQL['Titre']);
+            $article->setAuteur($articleSQL['Auteur']);
+            $article->setDescription($articleSQL['Description']);
+            $article->setDateAjout($articleSQL['DateAjout']);
+            $article->setImageRepository($articleSQL['ImageRepository']);
+            $article->setImageFileName($articleSQL['ImageFileName']);
+
+            $listArticle[] = $article;
+        }
+        return $listArticle;
     }
 
     public function SqlGet(\PDO $bdd,$idArticle){

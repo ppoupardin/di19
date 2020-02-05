@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+use src\Model\Article;
 use src\Model\Categorie;
 use src\Model\Bdd;
 use src\Model\User;
@@ -21,11 +22,16 @@ class AdminController extends AbstractController {
         $user = new User();
         $listMail = $user->SqlMailNotAprouved(Bdd::GetInstance());
 
+        //liste article a comfirmer
+        $article = new Article();
+        $listArticle = $article->SqlGetAllWaiting(Bdd::GetInstance());
+
         return $this->twig->render('Admin/index_admin.html.twig', [
             //contenu du fichier css envoyé dans la vue
             'cssFileData' => $dataCss
             ,"listCategorie" => $listCategorie
             ,'listMail' => $listMail
+            ,'listArticle' => $listArticle
         ]);
     }
 
@@ -38,4 +44,6 @@ class AdminController extends AbstractController {
         header('Location:/Admin');
         return;
     }
+
+
 }

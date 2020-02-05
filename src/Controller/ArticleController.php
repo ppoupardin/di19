@@ -191,4 +191,29 @@ class ArticleController extends AbstractController {
         header('location:/Article/');
     }
 
+    public static function roleNeed($roleATester){
+        if(isset($_SESSION['login'])){
+            if(!in_array($roleATester,$_SESSION['login']['roles'])){
+                $_SESSION['errorlogin'] = "Vous n'êtes pas ".$roleATester;
+                header('Location:/Login');
+            }
+        }else{
+            $_SESSION['errorlogin'] = "Veuillez-vous identifier";
+            header('Location:/Login');
+        }
+    }
+
+    public function accept($idArticle){
+        ArticleController::roleNeed('administrateur');
+        $UserSQL = new Article();
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idArticle,2);
+        header('Location:/Admin');
+    }
+
+    public function refused($idArticle){
+        ArticleController::roleNeed('administrateur');
+        $UserSQL = new Article();
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idArticle,1);
+        header('Location:/Admin');
+    }
 }
