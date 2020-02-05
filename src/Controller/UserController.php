@@ -41,7 +41,8 @@ class UserController extends  AbstractController {
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
 
         if ($pwd_hashed_entry == $pwd_hashed_bdd) {
-            $_SESSION['login'] = $userInfoLog['id_uti'];
+            $_SESSION['login'] = array("id"=>$userInfoLog['id_uti'],
+                                        "roles"=>array("redacteur","administrateur"));
             header('Location:/');
         } else {
             $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
@@ -102,8 +103,8 @@ class UserController extends  AbstractController {
     public static function roleNeed($roleATester){
         if(isset($_SESSION['login'])){
             if(!in_array($roleATester,$_SESSION['login']['roles'])){
-                $_SESSION['errorlogin'] = "Vous n'êtes pas".$roleATester;
-                header('Location:/Contact');
+                $_SESSION['errorlogin'] = "Vous n'êtes pas ".$roleATester;
+                header('Location:/Login');
             }
         }else{
             $_SESSION['errorlogin'] = "Veuillez-vous identifier";

@@ -1,6 +1,4 @@
 .idea
 /vendor
-/var
-/var/cache
 composer.lock
-/var/cache/
+/var/cache
