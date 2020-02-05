@@ -31,7 +31,7 @@
 
         <div class="container">
 
-            {% if session.errinscription is defined %}
+            {% if session.errorinscription is defined %}
                 <div class="alert alert-danger"
                      style="position: absolute;
             width:90%;
@@ -39,8 +39,9 @@
             left:5%;
             border-radius: 10px;
             border-width: 1px;
-            border-style: solid">
-                    <p style="text-align: center">{{ session.errinscription }}</p>
+            border-style: solid;
+            z-index: 3">
+                    <p style="text-align: center">{{ session.errorinscription}}{% if session.errorinscriptionhtml is defined and session.errorinscriptionhtmllink is defined %}<a href="{{ session.errorinscriptionhtmllink }}" style="color: #0A246A;cursor: pointer;text-decoration: underline;">{{ session.errorinscriptionhtml }}</a>{% endif %}</p>
                 </div>
             {% endif %}
 

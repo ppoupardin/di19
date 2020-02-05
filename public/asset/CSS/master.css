@@ -1,10 +1,10 @@
 body {
     /* couleur police site */
-    color : black;
+    color : red;
 }
 
 .btn-blog {
-    color: white;
+    color: red;
     background-color: #42affa;
     margin:0em;
 }
