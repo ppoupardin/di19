@@ -1,0 +1,14 @@
+{% extends "index.html.twig" %}
+{% block title %}{{ parent() }} - Resultat de l'envoi d'email {% endblock %}
+{% block body %}
+{% if result == 1 %}
+    <div class="container-fluid mt-2">
+        <h2 class="display-3">L'email à été envoyé avec succès</h2>
+    </div>
+{% else %}
+    <div class="container-fluid mt-2">
+        <h2 class="display-3">L'envoi d'email n'a pas pû être effectué , réessayez plus tard</h2>
+    </div>
+{% endif %}
+{% endblock %}
+

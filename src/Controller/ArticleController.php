@@ -35,7 +35,7 @@ class ArticleController extends AbstractController {
     }
     public function add(){
         UserController::roleNeed('redacteur');
-        if($_POST AND $_SESSION['token'] == $_POST['token']){
+        if($_POST){// AND $_SESSION['token'] == $_POST['token']){
             $sqlRepository = null;
             $nomImage = null;
             if(!empty($_FILES['image']['name']) )
@@ -54,6 +54,40 @@ class ArticleController extends AbstractController {
                     move_uploaded_file($_FILES['image']['tmp_name'], $repository.'/'.$nomImage);
                 }
             }
+
+            if(($_POST['Titre'])!=(trim($_POST['Titre']))){
+                $_SESSION['errorarticleadd'] = "Le titre ne peut commencer ou finir par un espace";
+                header('Location:/Article/Add');
+                return;
+            }
+            if(trim($_POST['Titre']) != strip_tags(trim($_POST['Titre']))) {
+                $_SESSION['errorarticleadd'] = "Le titre n'a pas une structure valide";
+                header('Location:/Article/Add');
+                return;
+            }
+
+            if(($_POST['Description'])!=(trim($_POST['Description']))){
+                $_SESSION['errorarticleadd'] = "La description ne peut commencer ou finir par un espace";
+                header('Location:/Article/Add');
+                return;
+            }
+            if(trim($_POST['Description']) != strip_tags(trim($_POST['Description']))) {
+                $_SESSION['errorarticleadd'] = "La description n'a pas une structure valide";
+                header('Location:/Article/Add');
+                return;
+            }
+
+            if(($_POST['DateAjout'])!=(trim($_POST['DateAjout']))){
+                $_SESSION['errorarticleadd'] = "La date d'ajout ne peut commencer ou finir par un espace";
+                header('Location:/Article/Add');
+                return;
+            }
+            if(trim($_POST['DateAjout']) != strip_tags(trim($_POST['DateAjout']))) {
+                $_SESSION['errorarticleadd'] = "La date d'ajout n'a pas une structure valide";
+                header('Location:/Article/Add');
+                return;
+            }
+
             $article = new Article();
             $article->setTitre($_POST['Titre'])
                 ->setDescription($_POST['Description'])
@@ -61,9 +95,11 @@ class ArticleController extends AbstractController {
                 ->setDateAjout($_POST['DateAjout'])
                 ->setImageRepository($sqlRepository)
                 ->setImageFileName($nomImage)
+                ->setStatus(0)
             ;
             $article->SqlAdd(BDD::getInstance());
             header('Location:/Article');
+            unset($_SESSION['errorarticleadd']);
         }else{
             // Génération d'un TOKEN
             $token = bin2hex(random_bytes(32));
@@ -104,15 +140,50 @@ class ArticleController extends AbstractController {
                 }
             }
 
+
+            if(($_POST['Titre'])!=(trim($_POST['Titre']))){
+                $_SESSION['errorarticleupdate'] = "Le titre ne peut commencer ou finir par un espace";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+            if(trim($_POST['Titre']) != strip_tags(trim($_POST['Titre']))) {
+                $_SESSION['errorarticleupdate'] = "Le titre n'a pas une structure valide";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+
+            if(($_POST['Description'])!=(trim($_POST['Description']))){
+                $_SESSION['errorarticleupdate'] = "La description ne peut commencer ou finir par un espace";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+            if(trim($_POST['Description']) != strip_tags(trim($_POST['Description']))) {
+                $_SESSION['errorarticleupdate'] = "La description n'a pas une structure valide";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+
+            if(($_POST['DateAjout'])!=(trim($_POST['DateAjout']))){
+                $_SESSION['errorarticleupdate'] = "La date d'ajout ne peut commencer ou finir par un espace";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+            if(trim($_POST['DateAjout']) != strip_tags(trim($_POST['DateAjout']))) {
+                $_SESSION['errorarticleupdate'] = "La date d'ajout n'a pas une structure valide";
+                header('Location:/Article/Update/'.$articleID);
+                return;
+            }
+
             $article->setTitre($_POST['Titre'])
                 ->setDescription($_POST['Description'])
                 ->setAuteur($_POST['Auteur'])
                 ->setDateAjout($_POST['DateAjout'])
                 ->setImageRepository($sqlRepository)
                 ->setImageFileName($nomImage)
+                ->setStatus(0)
             ;
-
             $article->SqlUpdate(BDD::getInstance());
+            header("location:/");
         }
 
         return $this->twig->render('Article/update.html.twig',[

@@ -62,6 +62,7 @@ $router->post('/Categorie/add', 'Categorie#add');
 $router->post('/User/Accept/:id', 'User#accept#id');
 $router->post('/User/Refused/:id', 'User#refused#id');
 $router->post('/User/Banned/:id', 'User#banned#id');
+$router->post('/User/update/:id', 'User#update#id');
 
 
 

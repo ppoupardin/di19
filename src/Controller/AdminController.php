@@ -11,6 +11,7 @@ class AdminController extends AbstractController {
     public function index(){
         UserController::roleNeed('administrateur');
         unset($_SESSION['errorcsschange']);
+        unset($_SESSION['errorcategoriechange']);
         // fichier css
         $file='master.css';
         $dataCss = file_get_contents('./asset/css/'.$file);
@@ -26,6 +27,11 @@ class AdminController extends AbstractController {
         //liste article a comfirmer
         $article = new Article();
         $listArticle = $article->SqlGetAllWaiting(Bdd::GetInstance());
+        //liste article (Gestion articles)
+        $articleList = $article->SqlGetAll(Bdd::GetInstance());
+
+        //liste User (Gestion utilisateurs)
+        $listUser = $user->SqlGetAllActiveUser(Bdd::GetInstance());
 
         return $this->twig->render('Admin/index_admin.html.twig', [
             //contenu du fichier css envoyé dans la vue
@@ -33,6 +39,8 @@ class AdminController extends AbstractController {
             ,"listCategorie" => $listCategorie
             ,'listMail' => $listMail
             ,'listArticle' => $listArticle
+            ,'listUser' => $listUser
+            ,'articleList' => $articleList
         ]);
     }
 

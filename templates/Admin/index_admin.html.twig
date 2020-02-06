@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container-fluid mt-2">
         <div class="row py-4 ml-2">
-            <div class="col-lg-4 mx-auto card p-0" id="categories" >
+            <div class="col-lg-6 mx-auto card p-0 maxvh" id="categories" >
                 <label class="text-primary text-center p-2"><h3>Articles attente confirmation</h3></label>
                 <table class="table table-striped">
                     <thead>
@@ -21,7 +21,7 @@
                             <th scope="row"> {{ article.id }}</th>
                             <td>{{ article.Titre }}</td>
                             <td>{{ article.Auteur }}</td>
-                            <td>{{ article.DateAjout }}</td>
+                            <td>{{ article.DateAjout | date("d/m/Y") }}</td>
                             <td class="row">
                                 <a href="/Admin" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                 <form action="/Article/Accept/{{  article.id }}" method="post">
@@ -36,7 +36,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-3 mx-auto card p-0" id="subscripbConfirm">
+            <div class="col-lg-5 mx-auto card p-0 maxvh" id="subscripbConfirm">
                 <!-- Formulaire de confirmation inscription -->
                 <label class="text-primary p-2 text-center" for=""><h3>Confirmations inscription</h3></label>
                 <table class="table table-striped">
@@ -57,12 +57,12 @@
                             <td>{{ mail.utimail }}</td>
                             <td>
                                 <form action="/User/Accept/{{ mail.iduti }}" method="post">
-                                    <button type="submit" name="deleteCategorie" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                    <button type="submit" name="" class="btn btn-success"><i class="fas fa-check"></i></button>
                                 </form>
                             </td>
                             <td>
                                 <form action="/User/Refused/{{ mail.iduti }}" method="post">
-                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="submit" name="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -70,33 +70,124 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-4 mx-auto card p-2" id="cssModifier">
-                <!-- Formulaire de modif du css en ligne -->
+        </div>
+        <div class="row pb-4 ml-2">
+            <div class="col-lg-5 mx-auto card p-0 maxvh">
+                <label class="text-primary text-center p-2"><h3>Gestion utilisateurs</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Prenom</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col" class="text-center">Editer</th>
+                        <th scope="col" class="text-center">Bannir</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in listUser %}
+                        {% if 'administrateur' in user.utirole %}
 
-                <form method="post" class="" action="/Admin/sendCss">
-                    <div class="form-group">
-                        <label class="text-primary text-center" for="textarea_1"><h3>Modification du Css du blog</h3></label>
-                        <textarea class="form-control" id="textarea_1" name="cssContent" rows="10">{{ cssFileData }}</textarea>
-                    </div>
-                    {% if session.errorcsschange is defined %}
-                        <div class="alert alert-danger"
-                             style="position: absolute;
-            width:90%;
-            height: 50px;
-            top:295px;
-            left:5%;
-            border-radius: 10px;
-            border-width: 1px;
-            border-style: solid">
-                            <p style="text-align: center">{{ session.errorcsschange }}</p>
-                        </div>
-                    {% endif %}
-                    <input type="submit" class="btn btn-blog" value="Soumettre">
-                </form>
+                        {% endif %}
+                        {% if 'redacteur' in user.utirole %}
+
+                        {% endif %}
+                        <tr>
+                            <th scope="row"> {{ user.iduti }}</th>
+                            <td> {{ user.utiprenom }}</td>
+                            <td> {{ user.utinom }}</td>
+                            <td>
+                                {% if 'administrateur' in user.utirole %}
+                                    <span>Admin </span>
+                                {% endif %}
+                                {% if 'redacteur' in user.utirole %}
+                                    <span>Rédacteur </span>
+                                {% endif %}
+                            </td>
+                            {% if session.login.id != user.iduti %}
+                            <td class="text-center row">
+                                <select name="role" form="updateUser{{ user.iduti }}">
+                                    {% if 'administrateur' not in user.utirole %}
+                                        <option value="administrateur">Admin</option>
+                                    {% endif %}
+                                    {% if 'redacteur' not in user.utirole %}
+                                        <option value="redacteur">Rédacteur</option>
+                                    {% endif %}
+                                    <option value="">Retirer tous les droits</option>
+                                </select>
+                                <form action="/User/update/{{ user.iduti }}" method="post" id="updateUser{{ user.iduti }}">
+                                    <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <form action="/User/Banned/{{ user.iduti }}" method="post">
+                                    <button type="submit" name="banUser" class="btn btn-danger"><i class="fas fa-user-slash"></i></button>
+                                </form>
+                            </td>
+                            {% else %}
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-warning" disabled><i class="far fa-edit"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" name="deleteCategorie" disabled class="btn btn-danger"><i class="fas fa-user-slash"></i></button>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6 mx-auto card p-0 maxvh">
+                <label class="text-primary text-center p-2"><h3>Gestion articles</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Auteur</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for article in articleList %}
+                        <tr>
+                            <th scope="row"><a href="/Article/Show/{{ article.id }}">#{{ article.Id }}</a></th>
+                            <td>{{ article.Titre }}</td>
+                            <td>{{ article.Auteur }}</td>
+                            <td>{{ article.DateAjout | date("d/m/Y") }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-success" href="/Article/Show/{{ article.Id }}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-danger" href="/Article/Delete/{{ article.Id }}"><i class="far fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="row pb-4 ml-2">
-            <div class="col-lg-4 mx-auto card p-0" id="categories" >
+            <div class="col-lg-6 mx-auto card p-4">
+                <!-- Formulaire de modif du css en ligne -->
+                <form method="post" class="" action="/Admin/sendCss">
+                    <div class="form-group">
+                        <label class="text-primary text-center" for="textarea_1"><h3>Modification du Css du blog</h3></label>
+                        <textarea class="form-control" id="textarea_1" name="cssContent" rows="20">{{ cssFileData }}</textarea>
+                    </div>
+                    {% if session.errorcsschange is defined %}
+                        <div class="alert alert-danger" style="position: absolute;  width:90%; height: 50px; top:295px; left:5%; border-radius: 10px; border-width: 1px; border-style: solid">
+                            <p style="text-align: center">{{ session.errorcsschange }}</p>
+                        </div>
+                    {% endif %}
+                    <input type="submit" class="btn btn-blog" value="Soumettre le CSS">
+                </form>
+            </div>
+            <div class="col-lg-5 mx-auto card p-0" id="categories" >
                 <label class="text-primary text-center p-2"><h3>Liste catégories article</h3></label>
                 <table class="table table-striped">
                     <thead>
@@ -135,15 +226,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-lg-3 mx-auto card p-0">
-                <label class="text-primary text-center p-2"><h3>Gestion utilisateurs</h3></label>
-                <div class="alert alert-warning"><p>A Faire</p></div>
-            </div>
-            <div class="col-lg-4 mx-auto card p-0">
-                <label class="text-primary text-center p-2"><h3>Gestion article</h3></label>
-                <div class="alert alert-warning"><p>A Faire</p></div>
-
             </div>
         </div>
 
