@@ -15,9 +15,9 @@ h2 {
     color: gray;
 }
 
-h3 {
+h2,h3,h4,h5  {
 	margin-bottom:1em;
-    color: #0A246A;
+	color:#6f42c1;
 }
 
 h4 {
@@ -25,7 +25,7 @@ h4 {
 }
 
 .navbar {
-    background-color: black;
+    background-color: #6610f2!important;
     color: white;
 }
 

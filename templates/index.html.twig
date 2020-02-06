@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
-    <link rel="stylesheet" href="./asset/css/master.css">
+    <link rel="stylesheet" href="/asset/css/master.css">
     {% block css %}{% endblock %}
 </head>
 
@@ -65,7 +65,7 @@
         </ul>
 
         <!--liste déroulante de catégories dans la Recherche -->
-        <form class="form-inline" method="search" action="/Categorie/Show/{{ post.search }}">
+        <form class="form-inline" method="post" action="/Categorie/Show">
             <select name="Catégorie" id="listCategorie">
                 <option value="0">-- Recherche de catégorie --</option>
                 <option value="Toutes les catégories">Toutes les catégories</option>
