@@ -35,8 +35,18 @@
         </div>
 
 
-        <form name="updateArticle" method="post" class="col-lg-8" enctype="multipart/form-data">
-
+        <form name="updateArticle" id="updateArticle" method="post" class="col-lg-8" enctype="multipart/form-data">
+            <div class="form-group row">
+                <label for="Catégorie" class="col-sm-2 col-form-label">Catégorie</label>
+                <div class="col-sm-10">
+                    <select name="categorie" form="updateArticle" class="form-control">
+                        {% for categorie in listCategorie %}
+                            <option value="{{ categorie.idCat }}">{{ categorie.categories }}</option>
+                        {% endfor %}
+                    </select>
+                    <td class="text-center"> </td>
+                </div>
+            </div>
             <div class="form-group row">
                 <label for="Titre" class="col-sm-2 col-form-label">Titre de l'article</label>
                 <div class="col-sm-10">

@@ -180,21 +180,24 @@ class ArticleController extends AbstractController {
                 return;
             }
 
-            $article->setTitre($_POST['Titre'])
-                ->setDescription($_POST['Description'])
-                ->setAuteur($_POST['Auteur'])
-                ->setDateAjout($_POST['DateAjout'])
-                ->setImageRepository($sqlRepository)
-                ->setImageFileName($nomImage)
-                ->setIdcat($_POST['categorie'])
-                ->setStatus(0)
-            ;
+            $article->setTitre($_POST['Titre']);
+            $article->setDescription($_POST['Description']);
+            $article->setAuteur($_POST['Auteur']);
+            $article->setDateAjout($_POST['DateAjout']);
+            $article->setImageRepository($sqlRepository);
+            $article->setImageFileName($nomImage);
+            $article->setIdcat($_POST['categorie']);
+            $article->setStatus(0);
+
             $article->SqlUpdate(BDD::getInstance());
             header("location:/");
         }
-
+        // liste categories
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
         return $this->twig->render('Article/update.html.twig',[
             'article' => $article
+            ,'listCategorie' => $listCategorie
         ]);
     }
 
