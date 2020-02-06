@@ -1,6 +1,9 @@
 <?php
 namespace src\Controller;
 
+use src\Model\Bdd;
+use src\Model\Categorie;
+
 class ContactController extends AbstractController{
     private $mailer;
     private $transport;
@@ -18,7 +21,13 @@ class ContactController extends AbstractController{
 
     public function showForm(){
         unset($_SESSION['errorcontactform']);
-        return $this->twig->render('Contact/form.html.twig');
+
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+
+        return $this->twig->render('Contact/form.html.twig',[
+            "listCategorie" => $listCategorie
+        ]);
     }
 
     public function sendMail(){

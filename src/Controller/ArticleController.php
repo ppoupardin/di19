@@ -13,27 +13,54 @@ class ArticleController extends AbstractController {
     }
 
     public function ListAll(){
-    $article = new Article();
-    $listArticle = $article->SqlGetAll(Bdd::GetInstance());
+        $article = new Article();
 
-    //Lancer la vue TWIG
-    return $this->twig->render(
-        'Article/list.html.twig',[
-            'articleList' => $listArticle
-        ]
-    );
-}
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+
+        if ($_POST) {
+            if (!empty($_POST['categorie'])){
+                $listArticle = $article->SqlGetAllByCat(Bdd::GetInstance(),$_POST['categorie']);
+            } else {
+                $listArticle = $article->SqlGetAll(Bdd::GetInstance());
+            }
+
+            //Lancer la vue TWIG
+            return $this->twig->render(
+                'Article/list.html.twig',[
+                    'articleList' => $listArticle
+                    ,"listCategorie" => $listCategorie
+                ]
+            );
+        } else {
+            $listArticle = $article->SqlGetAll(Bdd::GetInstance());
+
+            //Lancer la vue TWIG
+            return $this->twig->render(
+                'Article/list.html.twig',[
+                    'articleList' => $listArticle
+                    ,"listCategorie" => $listCategorie
+                ]
+            );
+        }
+    }
+
     public function GetLastFive(){
         $article = new Article();
         $lastfiveArticle = $article->SqlGetLastFive(Bdd::GetInstance());
+
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
 
         //Lancer la vue TWIG
         return $this->twig->render(
             'Article/list.html.twig',[
                 'articleList' => $lastfiveArticle
+                ,"listCategorie" => $listCategorie
             ]
         );
     }
+
     public function add(){
         UserController::roleNeed('redacteur');
         if($_POST){// AND $_SESSION['token'] == $_POST['token']){

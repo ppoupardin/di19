@@ -65,10 +65,37 @@ class Article extends Contenu implements \JsonSerializable {
                 $article->setDateAjout($articleSQL['DateAjout']);
                 $article->setImageRepository($articleSQL['ImageRepository']);
                 $article->setImageFileName($articleSQL['ImageFileName']);
+                $article->setIdcat($articleSQL['id_categorie']);
+                $article->setStatus($articleSQL['Status']);
 
                 $listArticle[] = $article;
             }
             return $listArticle;
+    }
+
+    public function SqlGetAllByCat(\PDO $bdd, $idCat){
+        $requete = $bdd->prepare('SELECT * FROM articles WHERE Status = 2 AND id_categorie = :idCat');
+        $requete->execute([
+            "idCat" => $idCat
+        ]);
+        $arrayArticle = $requete->fetchAll();
+
+        $listArticle = [];
+        foreach ($arrayArticle as $articleSQL){
+            $article = new Article();
+            $article->setId($articleSQL['Id']);
+            $article->setTitre($articleSQL['Titre']);
+            $article->setAuteur($articleSQL['Auteur']);
+            $article->setDescription($articleSQL['Description']);
+            $article->setDateAjout($articleSQL['DateAjout']);
+            $article->setImageRepository($articleSQL['ImageRepository']);
+            $article->setImageFileName($articleSQL['ImageFileName']);
+            $article->setIdcat($articleSQL['id_categorie']);
+            $article->setStatus($articleSQL['Status']);
+
+            $listArticle[] = $article;
+        }
+        return $listArticle;
     }
 
     public function SqlGetLastFive(\PDO $bdd)

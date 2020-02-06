@@ -2,6 +2,7 @@
 namespace src\Controller;
 
 use src\Model\Bdd;
+use src\Model\Categorie;
 use src\Model\User;
 
 class UserController extends  AbstractController {
@@ -247,12 +248,18 @@ class UserController extends  AbstractController {
 
     public function ShowProfil($idUser){
         UserController::idNeed($idUser);
+
         $user = new User();
         $userTokenArray = $user->SqlHaveToken(Bdd::GetInstance(), $idUser);
         $UserToken=$userTokenArray['uti_token'];
+
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+
         unset($_SESSION['infoprofil']);
         return $this->twig->render('User/profil.html.twig',[
             "tokenUser"=>$UserToken
+            ,"listCategorie" => $listCategorie
         ]);
     }
 

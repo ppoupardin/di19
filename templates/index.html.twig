@@ -65,17 +65,12 @@
         </ul>
 
         <!--liste déroulante de catégories dans la Recherche -->
-        <form class="form-inline" method="post" action="/Categorie/Show">
-            <select name="Catégorie" id="listCategorie">
-                <option value="0">-- Recherche de catégorie --</option>
-                <option value="Toutes les catégories">Toutes les catégories</option>
-                <option value="Alarme">Alarme</option>
-                <option value="Eclairage">Eclairage</option>
-                <option value="Détecteur">Détecteur</option>
-                <option value="Chauffage">Chauffage</option>
-                <option value="Motorisation">Motorisation</option>
-                <option value="Electro">Electroménager</option>
-                <option value="EquipExté">Equipements d'extérieur</option>
+        <form class="form-inline" method="post" id="listcat" action="/Article">
+            <select name="categorie" form="listcat" class="form-control">
+                <option value="">Toutes les catégories</option>
+                {% for categorie in listCategorie %}
+                    <option value="{{ categorie.idCat }}">{{ categorie.categories }}</option>
+                {% endfor %}
             </select>
             <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="OK" name="searchSubmit">
         </form>

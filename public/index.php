@@ -21,6 +21,7 @@ $router = new \src\Router\Router($_GET['url']);
 $router->get('/', "Article#ListAll");
 // Article
 $router->get('/Article', "Article#ListAll");
+$router->post('/Article', "Article#ListAll");
 $router->get('/Article/LastFive', "Article#GetLastFive");
 $router->get('/Article/Update/:id', "Article#Update#id");
 $router->post('/Article/Update/:id', "Article#Update#id");
@@ -65,6 +66,7 @@ $router->post('/User/Accept/:id', 'User#accept#id');
 $router->post('/User/Refused/:id', 'User#refused#id');
 $router->post('/User/Banned/:id', 'User#banned#id');
 $router->post('/User/update/:id', 'User#update#id');
+// Profil
 $router->get('/Profile/:id', 'User#ShowProfil#id');
 $router->post('/Profile/:id', 'User#UpdateProfil#id');
 
