@@ -224,4 +224,11 @@ class UserController extends  AbstractController {
         $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,3);
         header('Location:/Admin');
     }
+
+    public function update($idUser){
+        UserController::roleNeed('administrateur');
+        $UserSQL = new User();
+        $UserSQL->SqlUpdateRole(BDD::GetInstance(),$idUser);
+        header('Location:/Admin');
+    }
 }

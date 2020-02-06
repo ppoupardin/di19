@@ -49,7 +49,7 @@ class Article extends Contenu implements \JsonSerializable {
     }
 
     public function SqlGetAll(\PDO $bdd){
-            $requete = $bdd->prepare('SELECT * FROM articles');
+            $requete = $bdd->prepare('SELECT * FROM articles WHERE Status = 2');
             $requete->execute();
             $arrayArticle = $requete->fetchAll();
 
@@ -130,8 +130,6 @@ class Article extends Contenu implements \JsonSerializable {
         $article->setImageFileName($datas['ImageFileName']);
 
         return $article;
-
-
     }
 
     public function SqlUpdate(\PDO $bdd){

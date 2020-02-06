@@ -12,3 +12,8 @@ body {
 h3 {
 	margin-bottom:1em;
 }
+
+.maxvh {
+    max-height: 45vh;
+    overflow: scroll;
+}
