@@ -60,6 +60,7 @@ $router->post('/Categorie/add', 'Categorie#add');
 // User
 $router->post('/User/Accept/:id', 'User#accept#id');
 $router->post('/User/Refused/:id', 'User#refused#id');
+$router->post('/User/Banned/:id', 'User#banned#id');
 
 
 
