@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container-fluid mt-2">
         <div class="row py-4 ml-2">
-            <div class="col-lg-4 mx-auto card p-0 maxvh" id="categories" >
+            <div class="col-lg-6 mx-auto card p-0 maxvh" id="categories" >
                 <label class="text-primary text-center p-2"><h3>Articles attente confirmation</h3></label>
                 <table class="table table-striped">
                     <thead>
@@ -36,7 +36,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-3 mx-auto card p-0 maxvh" id="subscripbConfirm">
+            <div class="col-lg-5 mx-auto card p-0 maxvh" id="subscripbConfirm">
                 <!-- Formulaire de confirmation inscription -->
                 <label class="text-primary p-2 text-center" for=""><h3>Confirmations inscription</h3></label>
                 <table class="table table-striped">
@@ -69,22 +69,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            <div class="col-lg-4 mx-auto card p-2 maxvh" id="cssModifier">
-                <!-- Formulaire de modif du css en ligne -->
-
-                <form method="post" class="" action="/Admin/sendCss">
-                    <div class="form-group">
-                        <label class="text-primary text-center" for="textarea_1"><h3>Modification du Css du blog</h3></label>
-                        <textarea class="form-control" id="textarea_1" name="cssContent" rows="10">{{ cssFileData }}</textarea>
-                    </div>
-                    {% if session.errorcsschange is defined %}
-                        <div class="alert alert-danger" style="position: absolute;  width:90%; height: 50px; top:295px; left:5%; border-radius: 10px; border-width: 1px; border-style: solid">
-                            <p style="text-align: center">{{ session.errorcsschange }}</p>
-                        </div>
-                    {% endif %}
-                    <input type="submit" class="btn btn-blog" value="Soumettre le CSS">
-                </form>
             </div>
         </div>
         <div class="row pb-4 ml-2">
@@ -188,7 +172,22 @@
             </div>
         </div>
         <div class="row pb-4 ml-2">
-            <div class="col-lg-4 card p-0" id="categories" >
+            <div class="col-lg-6 mx-auto card p-4">
+                <!-- Formulaire de modif du css en ligne -->
+                <form method="post" class="" action="/Admin/sendCss">
+                    <div class="form-group">
+                        <label class="text-primary text-center" for="textarea_1"><h3>Modification du Css du blog</h3></label>
+                        <textarea class="form-control" id="textarea_1" name="cssContent" rows="20">{{ cssFileData }}</textarea>
+                    </div>
+                    {% if session.errorcsschange is defined %}
+                        <div class="alert alert-danger" style="position: absolute;  width:90%; height: 50px; top:295px; left:5%; border-radius: 10px; border-width: 1px; border-style: solid">
+                            <p style="text-align: center">{{ session.errorcsschange }}</p>
+                        </div>
+                    {% endif %}
+                    <input type="submit" class="btn btn-blog" value="Soumettre le CSS">
+                </form>
+            </div>
+            <div class="col-lg-5 mx-auto card p-0" id="categories" >
                 <label class="text-primary text-center p-2"><h3>Liste catégories article</h3></label>
                 <table class="table table-striped">
                     <thead>
