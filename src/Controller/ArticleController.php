@@ -4,6 +4,7 @@ namespace src\Controller;
 use src\Model\Article;
 use src\Model\Bdd;
 use DateTime;
+use src\Model\Categorie;
 
 class ArticleController extends AbstractController {
 
@@ -87,16 +88,17 @@ class ArticleController extends AbstractController {
                 header('Location:/Article/Add');
                 return;
             }
-
+            //die(var_dump($_POST));
             $article = new Article();
-            $article->setTitre($_POST['Titre'])
-                ->setDescription($_POST['Description'])
-                ->setAuteur($_POST['Auteur'])
-                ->setDateAjout($_POST['DateAjout'])
-                ->setImageRepository($sqlRepository)
-                ->setImageFileName($nomImage)
-                ->setStatus(0)
-            ;
+            $article->setTitre($_POST['Titre']);
+            $article->setDescription($_POST['Description']);
+            $article->setAuteur($_POST['Auteur']);
+            $article ->setDateAjout($_POST['DateAjout']);
+            $article->setImageRepository($sqlRepository);
+            $article->setImageFileName($nomImage);
+            $article->setStatus(0);
+            $article->setIdcat($_POST['categorie']);
+
             $article->SqlAdd(BDD::getInstance());
             header('Location:/Article');
             unset($_SESSION['errorarticleadd']);
@@ -104,9 +106,13 @@ class ArticleController extends AbstractController {
             // Génération d'un TOKEN
             $token = bin2hex(random_bytes(32));
             $_SESSION['token'] = $token;
+            // liste categories
+            $categorie = new Categorie();
+            $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
             return $this->twig->render('Article/add.html.twig',
                 [
                     'token' => $token
+                    ,'listCategorie' => $listCategorie
                 ]);
         }
     }
@@ -174,20 +180,24 @@ class ArticleController extends AbstractController {
                 return;
             }
 
-            $article->setTitre($_POST['Titre'])
-                ->setDescription($_POST['Description'])
-                ->setAuteur($_POST['Auteur'])
-                ->setDateAjout($_POST['DateAjout'])
-                ->setImageRepository($sqlRepository)
-                ->setImageFileName($nomImage)
-                ->setStatus(0)
-            ;
+            $article->setTitre($_POST['Titre']);
+            $article->setDescription($_POST['Description']);
+            $article->setAuteur($_POST['Auteur']);
+            $article->setDateAjout($_POST['DateAjout']);
+            $article->setImageRepository($sqlRepository);
+            $article->setImageFileName($nomImage);
+            $article->setIdcat($_POST['categorie']);
+            $article->setStatus(0);
+
             $article->SqlUpdate(BDD::getInstance());
             header("location:/");
         }
-
+        // liste categories
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
         return $this->twig->render('Article/update.html.twig',[
             'article' => $article
+            ,'listCategorie' => $listCategorie
         ]);
     }
 

@@ -196,6 +196,44 @@ class User implements \JsonSerializable
         }
     }
 
+    public function SqlUpdateRole(\PDO $bdd, $idUser) {
+        try{
+            $role = $_POST['role'];
+            $user = new User();
+            $userData = $user->SqlGet(Bdd::GetInstance(),$idUser);
+            $oldRole = $userData->getUtirole();
+            if (!empty($oldRole) AND !empty($role)){
+                $role = $oldRole." ".$role;
+            }
+            $requete = $bdd->prepare('UPDATE utilisateur set uti_role=:role WHERE id_uti=:id_user');
+            $requete->execute([
+                'role' => $role
+                ,'id_user' => $idUser
+            ]);
+            return array("0", "[OK] Update");
+        }catch (\Exception $e){
+            return array("1", "[ERREUR] ".$e->getMessage());
+        }
+    }
+
+    public function SqlGet(\PDO $bdd,$iduser){
+        $requete = $bdd->prepare('SELECT * FROM utilisateur where id_uti = :iduser');
+        $requete->execute([
+            'iduser' => $iduser
+        ]);
+
+        $datas =  $requete->fetch();
+
+        $user = new User();
+        $user->setIduti($datas['id_uti']);
+        $user->setUtirole($datas['uti_role']);
+        $user->setUtiprenom($datas['uti_prenom']);
+        $user->setUtinom($datas['uti_nom']);
+        $user->setUtistatus($datas['uti_status']);
+
+        return $user;
+    }
+
     public function SqlGetAllEmail(\PDO $bdd){
 
         $query = $bdd->prepare("SELECT uti_mail FROM utilisateur");
@@ -208,6 +246,25 @@ class User implements \JsonSerializable
             $user->setUtimail(strtolower($userSQL['uti_mail']));
 
             $emailUsers[] = $user->getUtimail();
+        }
+        return $emailUsers;
+    }
+
+    public function SqlGetAllActiveUser(\PDO $bdd){
+
+        $query = $bdd->prepare("SELECT uti_prenom, uti_nom, uti_mail, uti_role, id_uti FROM utilisateur WHERE uti_status = 1");
+        $query->execute();
+        $arrayUser = $query->fetchAll();
+
+        $emailUsers = [];
+        foreach ($arrayUser as $userSQL){
+            $user = new User();
+            $user->setUtimail(strtolower($userSQL['uti_mail']));
+            $user->setIduti($userSQL['id_uti']);
+            $user->setUtirole(explode(" ",$userSQL['uti_role']));
+            $user->setUtiprenom($userSQL['uti_prenom']);
+            $user->setUtinom($userSQL['uti_nom']);
+            $emailUsers[] = $user;
         }
         return $emailUsers;
     }

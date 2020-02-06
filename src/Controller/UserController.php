@@ -238,6 +238,13 @@ class UserController extends  AbstractController {
         header('Location:/Admin');
     }
 
+    public function update($idUser){
+        UserController::roleNeed('administrateur');
+        $UserSQL = new User();
+        $UserSQL->SqlUpdateRole(BDD::GetInstance(),$idUser);
+        header('Location:/Admin');
+    }
+
     public function ShowProfil($idUser){
         UserController::idNeed($idUser);
         $user = new User();

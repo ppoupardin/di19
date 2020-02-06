@@ -38,6 +38,7 @@ $router->post('/Article/Accept/:id', 'Article#accept#id');
 $router->post('/Article/Refused/:id', 'Article#refused#id');
 // Api
 $router->get('/Api/Article', "Api#ArticleGet");
+$router->get('/Api/Article/LastFive', "Api#ArticleGetLastFive");
 $router->post('/Api/Article', "Api#ArticlePost");
 $router->put('/Api/Article/:id/:json', "Api#ArticlePut#id#json");
 // Formulaire contact
@@ -56,12 +57,14 @@ $router->post('/Inscription', 'User#inscriptionCheck');
 // Categorie
 $router->post('/Categorie/delete/:id', 'Categorie#Delete#id');
 $router->post('/Categorie/update/:id', 'Categorie#update#id');
+$router->post('/Categorie/choice/:id', 'Categorie#choice#id');
 $router->get('/Categorie/update/:id', 'Categorie#update#id');
 $router->post('/Categorie/add', 'Categorie#add');
 // User
 $router->post('/User/Accept/:id', 'User#accept#id');
 $router->post('/User/Refused/:id', 'User#refused#id');
 $router->post('/User/Banned/:id', 'User#banned#id');
+$router->post('/User/update/:id', 'User#update#id');
 $router->get('/Profile/:id', 'User#ShowProfil#id');
 $router->post('/Profile/:id', 'User#UpdateProfil#id');
 

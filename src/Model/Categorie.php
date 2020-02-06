@@ -54,9 +54,9 @@ class Categorie implements \JsonSerializable {
 
     public function SqlUpdate(\PDO $bdd){
         try{
-            $requete = $bdd->prepare('UPDATE categorie set cat_libelle=:cat_libelle WHERE id_cat=:id_car');
+            $requete = $bdd->prepare('UPDATE categorie set cat_libelle=:cat_libelle WHERE id_cat=:id_cat');
             $requete->execute([
-                'id_car' => $this->getIdCat()
+                'id_cat' => $this->getIdCat()
                 ,'cat_libelle' => $this->getCategories()
             ]);
             return array("0", "[OK] Update");
