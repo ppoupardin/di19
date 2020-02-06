@@ -1,0 +1,69 @@
+{% extends "index.html.twig" %}
+{% block title %}{{ parent() }} - Votre profil {% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <h1 class="display-4">Bonjour {{ session.login.Prenom }}</h1>
+    </div>
+    {% if session.infoprofil is defined %}
+        <div class="alert alert-danger"
+             style="position: absolute;
+            width:40%;
+            top:130px;
+            left:25%;
+            height:50px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid">
+            <p style="text-align: center">{{ session.infoprofil }}</p>
+        </div>
+    {% endif %}
+
+    <form style="border-style: solid;border-width: 1px;position: absolute;left: 150px;width: 43%;vertical-align: center;height: 210px;" name="changerNom" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+            <label style="top: 22px;left: 25px;font-size: x-large;" for="Nom" class="col-sm-2 col-form-label">Nom      </label>
+            <div class="col-sm-10">
+                <input style="position: absolute;top: 22px;width: 25%;" required value="{{ session.login.Nom }}" type="text" name="Nom" class="form-control form-control-lg">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label style="top: 22px;left: 25px;font-size: x-large;" for="Prenom" class="col-sm-2 col-form-label">Prenom     </label>
+            <div class="col-sm-10">
+                <input style="position: absolute;top: 22px;width: 25%;" required value="{{ session.login.Prenom }}" type="text" name="Prenom" class="form-control form-control-lg">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label style="top: 22px;left: 25px;font-size: x-large;" for="Email" class="col-sm-2 col-form-label">Email    </label>
+            <div class="col-sm-10">
+                <input style="position: absolute;top: 22px;width: 73%;" required value="{{ session.login.Email }}" type="text" name="Email" class="form-control form-control-lg">
+            </div>
+        </div>
+        <input style="position: absolute;left: 83%;top:150px;" value="Mettre à jour" type="submit" class="btn btn-primary my-1">
+    </form>
+    {% if userToken =='' %}
+
+
+        <div id="generateToken" class="alert alert-danger"
+             style="position: absolute;
+            width:50%;
+            top:70%;
+            left:5%;
+            height: 120px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid">
+            <p style="text-decoration: underline;font-size: x-large;text-align: center">Vous n'avez pas de Token-API</p>
+            <a href="/" >
+                <input type="submit" style="position: absolute;left: 40%;text-align: center; color: white;" class="btn btn-primary my-1" value="Générer le Token-API">
+            </a>
+        </div>
+
+
+
+
+    {% endif %}
+
+
+
+{% endblock %}

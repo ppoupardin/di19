@@ -295,4 +295,5 @@ class ArticleController extends AbstractController {
         $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idArticle,1);
         header('Location:/Admin');
     }
+
 }

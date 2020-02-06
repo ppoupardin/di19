@@ -87,7 +87,8 @@ class UserController extends  AbstractController {
                     "roles" => $arrayRole,
                     "Prenom" => $userInfoLog['uti_prenom'],
                     "Nom" => $userInfoLog['uti_nom'],
-                    "Status" => $userInfoLog['uti_status']);
+                    "Status" => $userInfoLog['uti_status'],
+                    "Email"=>$userInfoLog['uti_mail']);
                 header('Location:/');
             } else {
                 $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
@@ -100,6 +101,7 @@ class UserController extends  AbstractController {
     public function logout(){
         unset($_SESSION['login']);
         unset($_SESSION['errorlogin']);
+        session_destroy();
 
         header('Location:/');
     }
@@ -203,6 +205,17 @@ class UserController extends  AbstractController {
             header('Location:/Login');
         }
     }
+    public static function idNeed($idATester){
+        if(isset($_SESSION['login'])){
+            if($idATester!=($_SESSION['login']['id'])){
+                    $_SESSION['errorlogin'] = "Le compte n°" . $idATester . " ne vous appartient pas";
+                    header('Location:/Login');
+            }
+        }else{
+            $_SESSION['errorlogin'] = "Veuillez-vous identifier";
+            header('Location:/Login');
+        }
+    }
 
     public function accept($idUser){
         UserController::roleNeed('administrateur');
@@ -223,5 +236,23 @@ class UserController extends  AbstractController {
         $UserSQL = new User();
         $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,3);
         header('Location:/Admin');
+    }
+
+    public function ShowProfil($idUser){
+        UserController::idNeed($idUser);
+        $user = new User();
+        $userTokenArray = $user->SqlHaveToken(Bdd::GetInstance(), $idUser);
+        $UserToken=$userTokenArray['uti_token'];
+        unset($_SESSION['infoprofil']);
+        return $this->twig->render('User/profil.html.twig',[
+            "tokenUser"=>$UserToken
+        ]);
+    }
+
+    public function UpdateProfil($idUser){
+        UserController::idNeed($idUser);
+        $_SESSION['infoprofil']="Cette fonctionnalité n'est pas encore disponible";
+        header('Location:/Profile/'.$idUser);
+
     }
 }

@@ -32,6 +32,7 @@ $router->get('/Article/Write', "Article#Write");
 $router->get('/Article/Read', "Article#Read");
 $router->get('/Article/WriteOne/:id', "Article#Read#id");
 $router->get('/Article/ListAll','Article#listAll');
+$router->get('/Article/Show/:id','Article#Show#id');
 // Article - confirmation
 $router->post('/Article/Accept/:id', 'Article#accept#id');
 $router->post('/Article/Refused/:id', 'Article#refused#id');
@@ -61,6 +62,10 @@ $router->post('/Categorie/add', 'Categorie#add');
 $router->post('/User/Accept/:id', 'User#accept#id');
 $router->post('/User/Refused/:id', 'User#refused#id');
 $router->post('/User/Banned/:id', 'User#banned#id');
+$router->get('/Profile/:id', 'User#ShowProfil#id');
+$router->post('/Profile/:id', 'User#UpdateProfil#id');
+
+
 
 
 
