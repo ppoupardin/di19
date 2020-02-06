@@ -179,18 +179,19 @@ class ArticleController extends AbstractController {
                 header('Location:/Article/Update/'.$articleID);
                 return;
             }
-
+            //die(var_dump($_POST));
             $article->setTitre($_POST['Titre']);
             $article->setDescription($_POST['Description']);
             $article->setAuteur($_POST['Auteur']);
             $article->setDateAjout($_POST['DateAjout']);
             $article->setImageRepository($sqlRepository);
             $article->setImageFileName($nomImage);
-            $article->setIdcat($_POST['categorie']);
             $article->setStatus(0);
+            $article->setIdcat($_POST['categorie']);
 
             $article->SqlUpdate(BDD::getInstance());
             header("location:/");
+
         }
         // liste categories
         $categorie = new Categorie();
