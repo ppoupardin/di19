@@ -56,6 +56,7 @@ $router->post('/Inscription', 'User#inscriptionCheck');
 // Categorie
 $router->post('/Categorie/delete/:id', 'Categorie#Delete#id');
 $router->post('/Categorie/update/:id', 'Categorie#update#id');
+$router->post('/Categorie/choice/:id', 'Categorie#choice#id');
 $router->get('/Categorie/update/:id', 'Categorie#update#id');
 $router->post('/Categorie/add', 'Categorie#add');
 // User

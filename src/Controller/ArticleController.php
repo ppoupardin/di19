@@ -4,6 +4,7 @@ namespace src\Controller;
 use src\Model\Article;
 use src\Model\Bdd;
 use DateTime;
+use src\Model\Categorie;
 
 class ArticleController extends AbstractController {
 
@@ -104,9 +105,13 @@ class ArticleController extends AbstractController {
             // Génération d'un TOKEN
             $token = bin2hex(random_bytes(32));
             $_SESSION['token'] = $token;
+            // liste categories
+            $categorie = new Categorie();
+            $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
             return $this->twig->render('Article/add.html.twig',
                 [
                     'token' => $token
+                    ,'listCategorie' => $listCategorie
                 ]);
         }
     }

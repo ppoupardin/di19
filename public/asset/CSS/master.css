@@ -8,9 +8,25 @@ body {
     background-color: #42affa;
     margin:0em;
 }
+.title-blog {
+
+}
+h2 {
+    color: gray;
+}
 
 h3 {
 	margin-bottom:1em;
+    color: #0A246A;
+}
+
+h4 {
+    margin-bottom: 1em;
+}
+
+.navbar {
+    background-color: black;
+    color: white;
 }
 
 .maxvh {

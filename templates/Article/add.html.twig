@@ -20,31 +20,48 @@
                 <p style="text-align: center">{{ session.errorarticleadd }}</p>
             </div>
         {% endif %}
+            <form name="choiceCategorie" action="/Categorie/choice/{{ categorie.idCat }}" method="post">
+                <div class="form-group row">
+                <label for="Catégorie" class="col-sm-2 col-form-label">Catégorie</label>
+                    <div class="col-sm-10">
+                    <select name="categorie" class="form-control" value="{{ categorie.categories }}">
+                        {% for categorie in listCategorie %}
+                        <option value="{{ categorie.idCat }}">{{ categorie.categories }}</option>
+                        {% endfor %}
+                    </select>
+                    <td class="text-center"> </td>
+                    </div>
+                </div>
+            </form>
+
+
+
+
         <form name="addArticle" method="post" enctype="multipart/form-data">
             <div class="form-group row">
                 <label for="Titre" class="col-sm-2 col-form-label">Titre de l'article</label>
                 <div class="col-sm-10">
-                    <input required type="text" name="Titre" class="form-control form-control-lg">
+                    <input type="text" name="Titre" class="form-control form-control-lg">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="Description" class="col-sm-2 col-form-label">Description</label>
                 <div class="col-sm-10">
-                    <textarea required name="Description" class="form-control" rows="9"></textarea>
+                    <textarea name="Description" class="form-control" rows="9"></textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="DateAjout" class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input required type="date" name="DateAjout" class="form-control disabled" value="<?php (new \DateTime())->format('Y-m-d');?>">
+                    <input type="date" name="DateAjout" class="form-control disabled" value="<?php (new \DateTime())->format('Y-m-d');?>">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="article_auteur" class="col-sm-2 col-form-label">Auteur :                                              {{ session.login.Nom }} {{ session.login.Prenom }}</label>
+                <label for="article_auteur" class="col-sm-2 col-form-label">Auteur</label>
                 <div class="col-sm-10">
-                    <input type="hidden" name="Auteur" value="{{ session.login.Nom }} {{ session.login.Prenom }}" class="form-control">
+                    <input type="text" name="Auteur" class="form-control">
                 </div>
             </div>
 
