@@ -32,6 +32,9 @@ $router->get('/Article/Write', "Article#Write");
 $router->get('/Article/Read', "Article#Read");
 $router->get('/Article/WriteOne/:id', "Article#Read#id");
 $router->get('/Article/ListAll','Article#listAll');
+// Article - confirmation
+$router->post('/Article/Accept/:id', 'Article#accept#id');
+$router->post('/Article/Refused/:id', 'Article#refused#id');
 // Api
 $router->get('/Api/Article', "Api#ArticleGet");
 $router->get('/Api/Article/LastFive', "Api#ArticleGetLastFive");
@@ -55,6 +58,10 @@ $router->post('/Categorie/delete/:id', 'Categorie#Delete#id');
 $router->post('/Categorie/update/:id', 'Categorie#update#id');
 $router->get('/Categorie/update/:id', 'Categorie#update#id');
 $router->post('/Categorie/add', 'Categorie#add');
+// User
+$router->post('/User/Accept/:id', 'User#accept#id');
+$router->post('/User/Refused/:id', 'User#refused#id');
+
 
 
 echo $router->run();

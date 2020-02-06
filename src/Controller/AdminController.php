@@ -1,8 +1,10 @@
 <?php
 namespace src\Controller;
 
+use src\Model\Article;
 use src\Model\Categorie;
 use src\Model\Bdd;
+use src\Model\User;
 
 class AdminController extends AbstractController {
     // vue TWIG page Admin
@@ -11,14 +13,25 @@ class AdminController extends AbstractController {
         // fichier css
         $file='master.css';
         $dataCss = file_get_contents('./asset/css/'.$file);
+
         // liste categories
         $categorie = new Categorie();
         $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+
+        //liste email a confirmer
+        $user = new User();
+        $listMail = $user->SqlMailNotAprouved(Bdd::GetInstance());
+
+        //liste article a comfirmer
+        $article = new Article();
+        $listArticle = $article->SqlGetAllWaiting(Bdd::GetInstance());
 
         return $this->twig->render('Admin/index_admin.html.twig', [
             //contenu du fichier css envoyé dans la vue
             'cssFileData' => $dataCss
             ,"listCategorie" => $listCategorie
+            ,'listMail' => $listMail
+            ,'listArticle' => $listArticle
         ]);
     }
 
@@ -31,4 +44,6 @@ class AdminController extends AbstractController {
         header('Location:/Admin');
         return;
     }
+
+
 }

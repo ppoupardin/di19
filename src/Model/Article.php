@@ -6,6 +6,7 @@ class Article extends Contenu implements \JsonSerializable {
     private $DateAjout;
     private $ImageRepository;
     private $ImageFileName;
+    private $status;
 
     public function firstXwords($nb){
         $phrase = $this->getDescription();
@@ -14,10 +15,23 @@ class Article extends Contenu implements \JsonSerializable {
         return implode(" ",array_slice($arrayWord,0,$nb));
     }
 
+    public function SqlUpdateStatus(\PDO $bdd, $idArticle,$status) {
+        try{
+            $requete = $bdd->prepare('UPDATE articles set Status=:status WHERE Id=:id_article');
+            $requete->execute([
+                'status' => $status
+                ,'id_article' => $idArticle
+            ]);
+            return array("0", "[OK] Update");
+        }catch (\Exception $e){
+            return array("1", "[ERREUR] ".$e->getMessage());
+        }
+    }
+
 
     public function SqlAdd(\PDO $bdd) {
         try{
-            $requete = $bdd->prepare('INSERT INTO articles (Titre, Description, DateAjout, Auteur, ImageRepository, ImageFileName) VALUES(:Titre, :Description, :DateAjout, :Auteur, :ImageRepository, :ImageFileName)');
+            $requete = $bdd->prepare('INSERT INTO articles (Titre, Description, DateAjout, Auteur, ImageRepository, ImageFileName, Status) VALUES(:Titre, :Description, :DateAjout, :Auteur, :ImageRepository, :ImageFileName, :Status)');
             $requete->execute([
                 "Titre" => $this->getTitre(),
                 "Description" => $this->getDescription(),
@@ -25,6 +39,7 @@ class Article extends Contenu implements \JsonSerializable {
                 "Auteur" => $this->getAuteur(),
                 "ImageRepository" => $this->getImageRepository(),
                 "ImageFileName" => $this->getImageFileName(),
+                'Status' => $this->getStatus()
             ]);
             return array("result"=>true,"message"=>$bdd->lastInsertId());
         }catch (\Exception $e){
@@ -52,8 +67,6 @@ class Article extends Contenu implements \JsonSerializable {
                 $listArticle[] = $article;
             }
             return $listArticle;
-
-
     }
 
     public function SqlGetLastFive(\PDO $bdd)
@@ -76,6 +89,27 @@ class Article extends Contenu implements \JsonSerializable {
             $lastfiveArticle[] = $article;
         }
         return $lastfiveArticle;
+    }
+
+    public function SqlGetAllWaiting(\PDO $bdd){
+        $requete = $bdd->prepare('SELECT * FROM articles WHERE Status=0');
+        $requete->execute();
+        $arrayArticle = $requete->fetchAll();
+
+        $listArticle = [];
+        foreach ($arrayArticle as $articleSQL){
+            $article = new Article();
+            $article->setId($articleSQL['Id']);
+            $article->setTitre($articleSQL['Titre']);
+            $article->setAuteur($articleSQL['Auteur']);
+            $article->setDescription($articleSQL['Description']);
+            $article->setDateAjout($articleSQL['DateAjout']);
+            $article->setImageRepository($articleSQL['ImageRepository']);
+            $article->setImageFileName($articleSQL['ImageFileName']);
+
+            $listArticle[] = $article;
+        }
+        return $listArticle;
     }
 
     public function SqlGet(\PDO $bdd,$idArticle){
@@ -224,6 +258,22 @@ class Article extends Contenu implements \JsonSerializable {
     {
         $this->ImageFileName = $ImageFileName;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
 

@@ -3,47 +3,72 @@
 {% block body %}
     <div class="container-fluid mt-2">
         <div class="row py-4 ml-2">
-            <div class="col-lg-4 mx-auto card p-2" id="categories" >
-                <label class="text-primary text-center"><h3>Liste catégories article</h3></label>
+            <div class="col-lg-4 mx-auto card p-0" id="categories" >
+                <label class="text-primary text-center p-2"><h3>Articles attente confirmation</h3></label>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Nom catégorie</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Auteur</th>
+                            <th scope="col">Date Ajout</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for categorie in listCategorie %}
+                    {% for article in listArticle %}
                         <tr>
-                            <th scope="row"> {{ categorie.idCat }}</th>
-                            <td>{{ categorie.categories }}</td>
+                            <th scope="row"> {{ article.id }}</th>
+                            <td>{{ article.Titre }}</td>
+                            <td>{{ article.Auteur }}</td>
+                            <td>{{ article.DateAjout }}</td>
                             <td class="row">
-                                <form action="/Categorie/delete/{{  categorie.idCat }}" method="post">
-                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                <a href="/Admin" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                <form action="/Article/Accept/{{  article.id }}" method="post">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
                                 </form>
-                                <form action="/Categorie/update/{{  categorie.idCat }}" method="post">
-                                    <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
+                                <form action="/Article/Refused/{{ article.id }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
-                    <tr>
-                        <form action="/Categorie/add" method="post">
-                            <th scope="row">#</th>
-                            <td><input required type="text" name="categorie" placeholder="Nouvelle catégorie"></td>
-                            <td>
-                                <button type="submit" class="btn btn-success"><i class="far fa-check-square"> Ajouter</i></button>
-                            </td>
-                        </form>
-                    </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-3 mx-auto card p-2" id="subscripbConfirm">
+            <div class="col-lg-3 mx-auto card p-0" id="subscripbConfirm">
                 <!-- Formulaire de confirmation inscription -->
-                <label class="text-primary  text-center" for=""><h3>Confirmations inscription</h3></label>
-
+                <label class="text-primary p-2 text-center" for=""><h3>Confirmations inscription</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Prenom</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Accepter</th>
+                            <th scope="col">Refuser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for mail in listMail %}
+                        <tr>
+                            <td>{{ mail.utiprenom }}</td>
+                            <td>{{ mail.utinom }}</td>
+                            <td>{{ mail.utimail }}</td>
+                            <td>
+                                <form action="/User/Accept/{{ mail.iduti }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/User/Refused/{{ mail.iduti }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
             <div class="col-lg-4 mx-auto card p-2" id="cssModifier">
                 <!-- Formulaire de modif du css en ligne -->
@@ -54,6 +79,57 @@
                     </div>
                     <input type="submit" class="btn btn-blog" value="Soumettre">
                 </form>
+            </div>
+        </div>
+        <div class="row pb-4 ml-2">
+            <div class="col-lg-4 mx-auto card p-0" id="categories" >
+                <label class="text-primary text-center p-2"><h3>Liste catégories article</h3></label>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom catégorie</th>
+                        <th scope="col" class="text-center">Editer</th>
+                        <th scope="col" class="text-center">Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for categorie in listCategorie %}
+                        <tr>
+                            <th scope="row"> {{ categorie.idCat }}</th>
+                            <form action="/Categorie/update/{{  categorie.idCat }}" method="post">
+                                <td><input type="text" name="categorie" class="form-control" value="{{ categorie.categories }}"> </td>
+                                <td class="text-center">
+                                    <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
+                                </td>
+                            </form>
+                            <td class="text-center">
+                                <form action="/Categorie/delete/{{  categorie.idCat }}" method="post">
+                                    <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <form action="/Categorie/add" method="post">
+                            <th scope="row">#</th>
+                            <td><input required type="text" class="form-control" name="categorie" placeholder="Nouvelle catégorie"></td>
+                            <td colspan="2" class="text-center">
+                                <button type="submit" class="btn btn-success"><i class="far fa-check-square"> Ajouter</i></button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-3 mx-auto card p-0">
+                <label class="text-primary text-center p-2"><h3>Gestion utilisateurs</h3></label>
+                <div class="alert alert-warning"><p>A Faire</p></div>
+            </div>
+            <div class="col-lg-4 mx-auto card p-0">
+                <label class="text-primary text-center p-2"><h3>Gestion article</h3></label>
+                <div class="alert alert-warning"><p>A Faire</p></div>
+
             </div>
         </div>
 

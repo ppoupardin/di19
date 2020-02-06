@@ -156,6 +156,22 @@ class User implements \JsonSerializable
         ];
     }
 
+    public function SqlMailNotAprouved(\PDO $bdd) {
+        $query = $bdd->prepare("SELECT * FROM utilisateur WHERE uti_status=0");
+        $query->execute();
+        $arrayUser = $query->fetchAll();
+        $emailUsers = [];
+        foreach ($arrayUser as $userSQL){
+            $user = new User();
+            $user->setUtimail(strtolower($userSQL['uti_mail']));
+            $user->setUtiprenom($userSQL['uti_prenom']);
+            $user->setUtinom($userSQL['uti_nom']);
+            $user->setIduti($userSQL['id_uti']);
+            $emailUsers[] = $user;
+        }
+        return $emailUsers;
+    }
+
     public function SqlAdd(\PDO $bdd)
     {
         $query = $bdd->prepare('INSERT INTO utilisateur (uti_prenom, uti_nom, uti_password, uti_mail) VALUES (:prenom, :nom, :password, :email)');
@@ -165,6 +181,19 @@ class User implements \JsonSerializable
             "password" => $this->getUtipassword(),
             "email" => $this->getUtimail()
         ]);
+    }
+
+    public function SqlUpdateStatus(\PDO $bdd, $idUser,$status) {
+        try{
+            $requete = $bdd->prepare('UPDATE utilisateur set uti_status=:status WHERE id_uti=:id_user');
+            $requete->execute([
+                'status' => $status
+                ,'id_user' => $idUser
+            ]);
+            return array("0", "[OK] Update");
+        }catch (\Exception $e){
+            return array("1", "[ERREUR] ".$e->getMessage());
+        }
     }
 
     public function SqlGetAllEmail(\PDO $bdd){
