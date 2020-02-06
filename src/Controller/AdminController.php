@@ -11,6 +11,7 @@ class AdminController extends AbstractController {
     public function index(){
         UserController::roleNeed('administrateur');
         unset($_SESSION['errorcsschange']);
+        unset($_SESSION['errorcategoriechange']);
         // fichier css
         $file='master.css';
         $dataCss = file_get_contents('./asset/css/'.$file);

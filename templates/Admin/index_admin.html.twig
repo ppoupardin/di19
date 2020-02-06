@@ -97,6 +97,19 @@
         </div>
         <div class="row pb-4 ml-2">
             <div class="col-lg-4 mx-auto card p-0" id="categories" >
+                {% if session.errorcategoriechange is defined %}
+                    <div class="alert alert-danger"
+                         style="position: absolute;
+            width:95%;
+            height: 50px;
+            top:45px;
+            left:5%;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid">
+                        <p style="text-align: center">{{ session.errorcategoriechange }}</p>
+                    </div>
+                {% endif %}
                 <label class="text-primary text-center p-2"><h3>Liste catégories article</h3></label>
                 <table class="table table-striped">
                     <thead>

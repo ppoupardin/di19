@@ -21,6 +21,18 @@ class CategorieController extends AbstractController {
         UserController::roleNeed('administrateur');
         //if($_POST AND $_SESSION['token'] == $_POST['token']){
         if($_POST){
+
+            if(($_POST['categorie'])!=(trim($_POST['categorie']))){
+                $_SESSION['errorcategoriechange'] = "La catégorie ne peut commencer ou finir par un espace";
+                header('Location:/Admin');
+                return;
+            }
+            if(trim($_POST['categorie']) != strip_tags(trim($_POST['categorie']))) {
+                $_SESSION['errorcategoriechange'] = "La catégorie n'a pas une structure valide";
+                header('Location:/Admin');
+                return;
+            }
+
             $categorie = new Categorie();
             $categorie->setCategories($_POST['categorie']);
             $categorie->SqlAdd(BDD::getInstance());
@@ -34,6 +46,18 @@ class CategorieController extends AbstractController {
         $categorie = $categorieSQL->SqlGet(BDD::GetInstance(),$categorieID);
         //if($_POST AND $_SESSION['token'] == $_POST['token']){
         if($_POST){
+
+            if(($_POST['categorie'])!=(trim($_POST['categorie']))){
+                $_SESSION['errorcategoriechange'] = "La catégorie que vous souhaitez modifier ne peut commencer ou finir par un espace";
+                header('Location:/Admin');
+                return;
+            }
+            if(trim($_POST['categorie']) != strip_tags(trim($_POST['categorie']))) {
+                $_SESSION['errorcategoriechange'] = "La catégorie que vous souhaitez modifier n'a pas une structure valide";
+                header('Location:/Admin');
+                return;
+            }
+
             $categorie->setCategories($_POST['categorie']);
             $categorie->SqlUpdate(BDD::getInstance());
             header('Location:/Admin');
