@@ -64,12 +64,18 @@ class UserController extends  AbstractController {
         $user = new User();
         $userInfoLog = $user->SqlGetLogin(Bdd::GetInstance(), ($_POST['email']));
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
+
         if($userInfoLog['uti_status']=='0'){
-            $_SESSION['errorlogin'] = "votre compte n'a pas été approuvé par un administrateur";
+            $_SESSION['errorlogin'] = "votre compte n'a pas encore été approuvé par un administrateur";
             header('Location:/Login');
             return;
         }
         if($userInfoLog['uti_status']=='2'){
+            $_SESSION['errorlogin'] = "votre compte a été refusé par un administrateur";
+            header('Location:/Login');
+            return;
+        }
+        if($userInfoLog['uti_status']=='3'){
             $_SESSION['errorlogin'] = "votre compte a été banni par un administrateur";
             header('Location:/Login');
             return;
@@ -209,6 +215,13 @@ class UserController extends  AbstractController {
         UserController::roleNeed('administrateur');
         $UserSQL = new User();
         $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,2);
+        header('Location:/Admin');
+    }
+
+    public function banned($idUser){
+        UserController::roleNeed('administrateur');
+        $UserSQL = new User();
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idUser,3);
         header('Location:/Admin');
     }
 }

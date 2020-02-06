@@ -10,6 +10,7 @@ class AdminController extends AbstractController {
     // vue TWIG page Admin
     public function index(){
         UserController::roleNeed('administrateur');
+        unset($_SESSION['errorcsschange']);
         // fichier css
         $file='master.css';
         $dataCss = file_get_contents('./asset/css/'.$file);
@@ -37,6 +38,10 @@ class AdminController extends AbstractController {
 
     // fonction enregistrement fichier CSS
     public function sendCss(){
+        if((strip_tags($_POST['cssContent']))!=($_POST['cssContent'])){
+            $_SESSION['errorcsschange']="Ce code CSS n'est pas conforme";
+            header("location/admin");
+        }
         UserController::roleNeed('administrateur');
         $monfichier = fopen('./asset/css/master.css', 'w');
         fputs($monfichier, $_POST['cssContent']);
