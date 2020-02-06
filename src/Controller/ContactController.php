@@ -1,6 +1,7 @@
 <?php
 namespace src\Controller;
 
+use src\Model\Article;
 use src\Model\Bdd;
 use src\Model\Categorie;
 
@@ -75,6 +76,61 @@ class ContactController extends AbstractController{
             'result'=>0
         ]);
     }
+
+        return $this->twig->render('Contact/confirmation.html.twig',[
+            'result'=>$result
+        ]);
+    }
+    public function sendMailOnArticle($idArticle){
+        if(($_POST['email'])!=(trim($_POST['email']))){
+            $_SESSION['errorcontactform'] = "L'Email ne peut commencer ou finir par un espace";
+            header('Location:/Contact');
+            return;
+        }
+        if(trim($_POST['email']) != strip_tags(trim($_POST['email']))) {
+            $_SESSION['errorcontactform'] = "L'Email n'a pas une structure valide";
+            header('Location:/Contact');
+            return;
+        }
+
+        if(($_POST['nom'])!=(trim($_POST['nom']))){
+            $_SESSION['errorcontactform'] = "Votre nom ne peut commencer ou finir par un espace";
+            header('Location:/Contact');
+            return;
+        }
+        if(trim($_POST['nom']) != strip_tags(trim($_POST['nom']))) {
+            $_SESSION['errorcontactform'] = "Votre nom n'a pas une structure valide";
+            header('Location:/Contact');
+            return;
+        }
+
+        if(trim($_POST['content']) != strip_tags(trim($_POST['content']))) {
+            $_SESSION['errorcontactform'] = "Le contenu de votre message n'a pas une structure valide ( balises :'<' ,'>' interdites)";
+            header('Location:/Contact');
+            return;
+        }
+
+        try {
+            $article = new Article();
+            $article = $article->SqlGet(Bdd::GetInstance(),$idArticle);
+
+            $mail = (new \Swift_Message('Contact à partir du formulaire'))
+                ->setFrom([$_POST["email"] => $_POST["nom"]])
+                ->setTo('contact@PWB_Domo.fr')
+                ->setBody(
+                    $this->twig->render('Contact/mailtoarticle.html.twig',
+                        [
+                            'message' => $_POST["content"]
+                            ,'article' => $article
+                        ])
+                    , 'text/html'
+                );
+            $result = $this->mailer->send($mail);
+        }catch (\Exception $err1) {
+            return $this->twig->render('Contact/confirmation.html.twig',[
+                'result'=>0
+            ]);
+        }
 
         return $this->twig->render('Contact/confirmation.html.twig',[
             'result'=>$result

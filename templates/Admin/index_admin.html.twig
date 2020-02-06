@@ -23,7 +23,7 @@
                             <td>{{ article.Auteur }}</td>
                             <td>{{ article.DateAjout | date("d/m/Y") }}</td>
                             <td class="row">
-                                <a href="/Admin" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                <a href="/Article/Show/{{ article.id }}" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                 <form action="/Article/Accept/{{  article.id }}" method="post">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
                                 </form>

@@ -17,6 +17,7 @@ class CategorieController extends AbstractController {
         );
     }
 
+
     public function add(){
         UserController::roleNeed('administrateur');
         //if($_POST AND $_SESSION['token'] == $_POST['token']){

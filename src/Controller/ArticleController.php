@@ -54,8 +54,24 @@ class ArticleController extends AbstractController {
 
         //Lancer la vue TWIG
         return $this->twig->render(
-            'Article/list.html.twig',[
+            'Article/fivelast.html.twig',[
                 'articleList' => $lastfiveArticle
+                ,"listCategorie" => $listCategorie
+            ]
+        );
+    }
+
+    public function show($idArticle){
+        $article = new Article();
+        $article = $article->SqlGet(Bdd::GetInstance(),$idArticle);
+
+        $categorie = new Categorie();
+        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+
+        //Lancer la vue TWIG
+        return $this->twig->render(
+            'Article/show.html.twig',[
+                'article' => $article
                 ,"listCategorie" => $listCategorie
             ]
         );

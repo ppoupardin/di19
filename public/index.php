@@ -33,7 +33,7 @@ $router->get('/Article/Write', "Article#Write");
 $router->get('/Article/Read', "Article#Read");
 $router->get('/Article/WriteOne/:id', "Article#Read#id");
 $router->get('/Article/ListAll','Article#listAll');
-$router->get('/Article/Show/:id','Article#Show#id');
+$router->get('/Article/Show/:id','Article#show#id');
 // Article - confirmation
 $router->post('/Article/Accept/:id', 'Article#accept#id');
 $router->post('/Article/Refused/:id', 'Article#refused#id');
@@ -45,6 +45,7 @@ $router->put('/Api/Article/:id/:json', "Api#ArticlePut#id#json");
 // Formulaire contact
 $router->get('/Contact', 'Contact#showForm');
 $router->post('/Contact/sendMail', 'Contact#sendMail');
+$router->post('/Contact/sendMailOnArticle/:id', 'Contact#sendMailOnArticle#id');
 // connexion
 $router->get('/Login', 'User#loginForm');
 $router->post('/Login', 'User#loginCheck');

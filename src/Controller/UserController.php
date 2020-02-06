@@ -21,48 +21,55 @@ class UserController extends  AbstractController {
     public function loginCheck()
     {
 
-
         if (trim($_POST['email']) == '') {
             $_SESSION['errorlogin'] = "Veuillez entrer une adresse Email";
             header('Location:/Login');
             return;
         }
+
         if (trim($_POST['password']) == '') {
             $_SESSION['errorlogin'] = "Veuillez entrer un mot de passe";
             header('Location:/Login');
             return;
         }
+
         if(trim($_POST['password']) != strip_tags(trim($_POST['password']))) {
             $_SESSION['errorlogin'] = "Le mot de passe n'a pas une structure valide";
             header('Location:/Login');
             return;
         }
+
         if(trim($_POST['email']) != strip_tags(trim($_POST['email']))) {
             $_SESSION['errorlogin'] = "L'adresse email n'a pas une structure valide";
             header('Location:/Login');
             return;
         }
+
         $userall = new User();
         $emails = $userall->SqlGetAllEmail(Bdd::GetInstance());
         $email_exist = false;
+
         foreach ($emails as $email) {
             if (strtolower(trim($_POST['email'])) == $email) {
                 $email_exist = true;
             }
         }
-        var_dump($email_exist);
+
         if($email_exist==false){
             $_SESSION['errorlogin'] = "Email ou Mot de passe incorrect";
             header('Location:/Login');
             return;
         }
+
         $options = [
             'salt' => md5(strtolower($_POST['email'])),
             'cost' => 12 // the default cost is 10
         ];
+
         define('PEPPER', sha1(strtolower($_POST['email'])));
         $pwd_hashed_entry = password_hash(($_POST['password']) . PEPPER, PASSWORD_DEFAULT, $options);
         $user = new User();
+
         $userInfoLog = $user->SqlGetLogin(Bdd::GetInstance(), ($_POST['email']));
         $pwd_hashed_bdd = $userInfoLog['uti_password'];
 
@@ -71,17 +78,19 @@ class UserController extends  AbstractController {
             header('Location:/Login');
             return;
         }
+
         if($userInfoLog['uti_status']=='2'){
             $_SESSION['errorlogin'] = "votre compte a été refusé par un administrateur";
             header('Location:/Login');
             return;
         }
+
         if($userInfoLog['uti_status']=='3'){
             $_SESSION['errorlogin'] = "votre compte a été banni par un administrateur";
             header('Location:/Login');
             return;
-        }
-        else {
+
+        } else {
             if ($pwd_hashed_entry == $pwd_hashed_bdd) {
                 $arrayRole = explode(" ", $userInfoLog['uti_role']);
                 $_SESSION['login'] = array("id" => $userInfoLog['id_uti'],
@@ -113,39 +122,43 @@ class UserController extends  AbstractController {
             if(!filter_var(
                 trim($_POST['Password']),
                 FILTER_VALIDATE_REGEXP,
-                array(
-                    "options" => array("regexp"=>"/[a-zA-Z]{5,}/")
-                )
-            )){
+                array("options" => array("regexp"=>"/[a-zA-Z]{5,}/")))
+            ){
                 $_SESSION['errorinscription'] = "Le mot de passe ne peut être inférieur à 5 caractères";
                 header('Location:/Inscription');
                 return;
             }
+
                 if(($_POST['Password'])!=(trim($_POST['Password']))){
                     $_SESSION['errorinscription'] = "Le mot de passe ne peut commencer ou finir par un espace";
                     header('Location:/Inscription');
                     return;
                 }
+
                 if(($_POST['Password2'])!=(trim($_POST['Password2']))){
                     $_SESSION['errorinscription'] = "Le mot de passe ne peut commencer ou finir par un espace";
                     header('Location:/Inscription');
                     return;
                 }
+
                 if(trim($_POST['Password']) != strip_tags(trim($_POST['Password']))) {
                     $_SESSION['errorinscription'] = "Le mot de passe n'a pas une structure valide";
                     header('Location:/Inscription');
                     return;
                 }
+
                 if(trim($_POST['Nom']) != strip_tags(trim($_POST['Nom']))) {
                     $_SESSION['errorinscription'] = "Le nom entré n'a pas une structure valide";
                     header('Location:/Inscription');
                     return;
                 }
+
                 if(trim($_POST['Prenom']) != strip_tags(trim($_POST['Prenom']))) {
                     $_SESSION['errorinscription'] = "Le Prenom entré n'a pas une structure valide";
                     header('Location:/Inscription');
                     return;
                 }
+
                 if(($_POST['Password'])!=($_POST['Password2'])){
                     $_SESSION['errorinscription'] = "Les mots de passe ne correspondent pas";
                     header('Location:/Inscription');
@@ -157,22 +170,25 @@ class UserController extends  AbstractController {
                     header('Location:/Inscription');
                     return;
                 }
+
                 $userall = new User();
                 $emails = $userall->SqlGetAllEmail(Bdd::GetInstance());
                 $email_exist = false;
+
                 foreach ($emails as $email) {
                     if (strtolower(trim($_POST['Email'])) == strtolower(trim($email)) ) {
                         $email_exist = true;
                     }
                 }
+
                 if($email_exist==true){
                     $_SESSION['errorinscriptionhtmllink']='/Login';
                     $_SESSION['errorinscriptionhtml']="Se connecter";
                     $_SESSION['errorinscription'] = "L'email appartient déjà à un compte existant : ".$html;
                     header('Location:/Inscription');
                     return;
-                }
-                else {
+
+                } else {
 
                     $options = [
                         'salt' => md5(strtolower($_POST['Email'])),
@@ -190,7 +206,6 @@ class UserController extends  AbstractController {
                     unset($_SESSION['errorinscription']);
                     unset($_SESSION['errorlogin']);
                     header('Location:/Login');
-
                 }
         }
     }
