@@ -57,6 +57,4 @@ class AdminController extends AbstractController {
         header('Location:/Admin');
         return;
     }
-
-
 }

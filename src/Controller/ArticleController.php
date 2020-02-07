@@ -160,7 +160,8 @@ class ArticleController extends AbstractController {
         UserController::roleNeed('redacteur');
         $articleSQL = new Article();
         $article = $articleSQL->SqlGet(BDD::getInstance(),$articleID);
-        if($_POST){
+        if($_POST AND $_SESSION['token'] == $_POST['token']){
+            //die(var_dump($_POST));
             $sqlRepository = null;
             $nomImage = null;
             if(!empty($_FILES['image']['name']) )
@@ -231,15 +232,28 @@ class ArticleController extends AbstractController {
             $article->SqlUpdate(BDD::getInstance());
             header("location:/");
 
+            unset($_SESSION['errorarticleupdate']);
+        }else {
+            // Génération d'un TOKEN
+            $token = bin2hex(random_bytes(32));
+            $_SESSION['token'] = $token;
+            // liste categories
+            $categorie = new Categorie();
+            $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+            unset($_SESSION['errorarticleupdate']);
+            return $this->twig->render('Article/update.html.twig',
+                [
+                    'token' => $token
+                    , 'article' => $article
+                    , 'listCategorie' => $listCategorie
+                ]);
         }
-        // liste categories
-        $categorie = new Categorie();
-        $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
-        return $this->twig->render('Article/update.html.twig',[
-            'article' => $article
-            ,'listCategorie' => $listCategorie
-        ]);
     }
+
+
+
+
+
 
     public function Delete($articleID){
         UserController::roleNeed('redacteur');
