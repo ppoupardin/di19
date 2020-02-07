@@ -250,11 +250,6 @@ class ArticleController extends AbstractController {
         }
     }
 
-
-
-
-
-
     public function Delete($articleID){
         UserController::roleNeed('redacteur');
 
@@ -351,12 +346,15 @@ class ArticleController extends AbstractController {
         }
     }
 
-    public function accept($idArticle){
+    public function accept($idArticle)
+    {
         ArticleController::roleNeed('administrateur');
         $UserSQL = new Article();
-        $UserSQL->SqlUpdateStatus(BDD::GetInstance(),$idArticle,2);
+        $UserSQL->SqlUpdateStatus(BDD::GetInstance(), $idArticle, 2);
         header('Location:/Admin');
+
     }
+
 
     public function refused($idArticle){
         ArticleController::roleNeed('administrateur');
@@ -366,3 +364,5 @@ class ArticleController extends AbstractController {
     }
 
 }
+
+
