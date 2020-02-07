@@ -184,6 +184,7 @@
                             <p style="text-align: center">{{ session.errorcsschange }}</p>
                         </div>
                     {% endif %}
+                    <input type="hidden" name="token" value="{{ token }}">
                     <input type="submit" class="btn btn-blog" value="Soumettre le CSS">
                 </form>
             </div>
@@ -205,21 +206,29 @@
                             <form action="/Categorie/update/{{  categorie.idCat }}" method="post">
                                 <td><input type="text" name="categorie" class="form-control" value="{{ categorie.categories }}"> </td>
                                 <td class="text-center">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
                                 </td>
                             </form>
                             <td class="text-center">
                                 <form action="/Categorie/delete/{{  categorie.idCat }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
                     <tr>
+                        {% if session.errorcategoriechange is defined %}
+                            <div class="alert alert-danger" style="position: absolute;  width:90%; height: 50px; top:310px; left:5%; border-radius: 10px; border-width: 1px; border-style: solid">
+                                <p style="text-align: center">{{ session.errorcategoriechange }}</p>
+                            </div>
+                        {% endif %}
                         <form action="/Categorie/add" method="post">
                             <th scope="row">#</th>
                             <td><input required type="text" class="form-control" name="categorie" placeholder="Nouvelle catégorie"></td>
                             <td colspan="2" class="text-center">
+                                <input type="hidden" name="token" value="{{ token }}">
                                 <button type="submit" class="btn btn-success"><i class="far fa-check-square"> Ajouter</i></button>
                             </td>
                         </form>

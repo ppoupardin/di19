@@ -21,7 +21,7 @@
 
 <a href="/" style="position: absolute;width: 9%;">
     <div id="ToHomepage">
-        <input style="text-align: center; color: white;" class="submit" value="Retour à l'accueil">Retour à l'accueil</input>
+        <input style="text-align: center; color: white;" class="submit" value="Accueil">
     </div>
 </a>
 
@@ -72,12 +72,12 @@ active">
 
                 <label>Adresse Email</label>
 
-                <input name="email" placeholder="" type="email">
+                <input required name="email" placeholder="" type="email">
 
 
                 <label>Mot de passe</label>
 
-                <input name="password" placeholder="" type="password">
+                <input required name="password" placeholder="" type="password">
 
                 <div  style="opacity: 0" class="check">
 
@@ -104,7 +104,7 @@ active">
                     <h3  style="opacity: 0">Restez connecté</h3>
 
                 </div>
-
+                <input type="hidden" name="token" value="{{ token }}">
                 <input class="submit" value="Connexion" type="submit">
 
             </form>

@@ -18,7 +18,7 @@ spl_autoload_register('chargerClasse');
 
 $router = new \src\Router\Router($_GET['url']);
 // Index
-$router->get('/', "Article#ListAll");
+$router->get('/', "Article#GetLastFive");
 // Article
 $router->get('/Article', "Article#ListAll");
 $router->post('/Article', "Article#ListAll");
@@ -70,6 +70,7 @@ $router->post('/User/update/:id', 'User#update#id');
 // Profil
 $router->get('/Profile/:id', 'User#ShowProfil#id');
 $router->post('/Profile/:id', 'User#UpdateProfil#id');
+$router->post('/Article/Search/:idcat','Article#GetbyCat#idcat');
 
 
 
