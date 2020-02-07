@@ -41,7 +41,7 @@
         </div>
         <input style="position: absolute;left: 83%;top:150px;" value="Mettre à jour" type="submit" class="btn btn-primary my-1">
     </form>
-    {% if userToken =='' %}
+    {% if tokenUser == '' %}
 
 
         <div id="generateToken" class="alert alert-danger"
@@ -54,12 +54,22 @@
             border-width: 1px;
             border-style: solid">
             <p style="text-decoration: underline;font-size: x-large;text-align: center">Vous n'avez pas de Token-API</p>
-            <a href="/" >
-                <input type="submit" style="position: absolute;left: 40%;text-align: center; color: white;" class="btn btn-primary my-1" value="Générer le Token-API">
-            </a>
+            <a href="/User/getTokenApi/{{ session.login.id }}" style="position: absolute;left: 40%;text-align: center; color: white;"  class="btn btn-primary my-1">Générer le Token-API</a>
+
         </div>
+    {% else %}
+        <div id="generateToken" class="alert alert-success"
+             style="position: absolute;
+            width:50%;
+            top:80%;
+            left:5%;
+            height: 120px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-style: solid">
+            <p style="text-decoration: underline;font-size: x-large;text-align: center">{{ tokenUser }}</p>
 
-
+        </div>
 
 
     {% endif %}

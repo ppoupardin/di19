@@ -305,4 +305,14 @@ class User implements \JsonSerializable
         return $UserToken;
     }
 
+    public function SqlsetTokenApi(\PDO $bdd, $idUser){
+        $token = bin2hex(random_bytes(32));
+        $query = $bdd->prepare('UPDATE utilisateur set uti_token=:token WHERE id_uti=:id_user');
+        $query->execute([
+            'id_user' => $idUser
+            ,'token' => $token
+        ]);
+        return;
+    }
+
 }

@@ -338,7 +338,6 @@ class UserController extends  AbstractController {
         $user = new User();
         $userTokenArray = $user->SqlHaveToken(Bdd::GetInstance(), $idUser);
         $UserToken=$userTokenArray['uti_token'];
-
         //recupère toute les catégorie des articles
         $categorie = new Categorie();
         $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
@@ -355,6 +354,14 @@ class UserController extends  AbstractController {
     public function UpdateProfil($idUser){
         UserController::idNeed($idUser);
         $_SESSION['infoprofil']="Cette fonctionnalité n'est pas encore disponible";
+        header('Location:/Profile/'.$idUser);
+    }
+
+    // function generation token API user
+    public function getTokenApi($idUser){
+        UserController::idNeed($idUser);
+        $user = new User();
+        $user->SqlsetTokenApi(Bdd::GetInstance(), $idUser);
         header('Location:/Profile/'.$idUser);
     }
 }
