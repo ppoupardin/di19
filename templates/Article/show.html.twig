@@ -7,7 +7,7 @@
     <h2 class="display-3">{{ article.Titre }}</h2>
     <hr class="my-4">
     <div class="row">
-        <div class="card col-lg-4 ml" style="width: 15rem;">
+        <div class="card col-lg-4 mx-auto" style="width: 15rem;">
 
             {% if article.ImageFileName != '' and    file_exist('./uploads/images/'~article.ImageRepository~'/'~article.ImageFileName) %}
                 <img class='card-img-top' alt='Article' src='/uploads/images/{{ article.ImageRepository }}/{{article.ImageFileName}}'/>
@@ -15,7 +15,7 @@
                 <h6 class="display-4">Pas d'image</h6>
             {% endif %}
         </div>
-        <div class="card col-lg-6 ml">
+        <div class="card col-lg-6 mx-auto">
             <div class="form-group row">
                 <label for="Catégorie" class="col-sm-2 col-form-label">Catégorie</label>
                 <div class="col-sm-10">

@@ -4,41 +4,33 @@
 {% block body %}
 
     <div class="jumbotron">
-        <h1 class="display-4">Liste des articles</h1>
+        <h2 class="display-4">Liste des articles</h2>
     </div>
-    <div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Titre</th>
-            <th scope="col">Auteur</th>
-            <th scope="col">Date</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        {% for article in articleList %}
-            <tr>
-                <th scope="row"><a href="/Article/Show/{{ article.id }}">#{{ article.Id }}</a></th>
-                <td>{{ article.Titre }}</td>
-                <td>{{ article.Auteur }}</td>
-                <td>{{ article.DateAjout | date("d/m/Y") }}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-success" href="/Article/Show/{{ article.Id }}"><i class="far fa-eye"></i></a>
+    <div class="col-lg-10 mx-auto">
+        <div class="row">
+            {% for article in articleList %}
+                <div class="col-lg-3 mx-auto mb-3" style="width: 15rem;">
+                    <div class="card">
+                    <a href="/Article/Show/{{ article.id }}">
+                        {% if article.ImageFileName != '' and    file_exist('./uploads/images/'~article.ImageRepository~'/'~article.ImageFileName) %}
+                            <img class='card-img-top' alt='Article' src='/uploads/images/{{ article.ImageRepository }}/{{article.ImageFileName}}'/>
+                        {% else %}
+                            <h6 class="display-4">Pas d'image</h6>
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <a href="/Article/Show/{{ article.id }}"><h3>{{ article.Titre }}</h3></a>
+                        <p class="font-italic">{{ article.Description | slice(0, 300)}}.....</p>
+                        <p class="font-italic float-right">{{ article.Auteur }}</p>
                         <a class="btn btn-warning" href="/Article/Update/{{ article.Id }}"><i class="fas fa-edit"></i></a>
                         <a class="btn btn-danger" href="/Article/Delete/{{ article.Id }}"><i class="far fa-trash-alt"></i></a>
                     </div>
-                    <a class="btn btn-secondary" href="/Article/WriteOne/{{ article.Id }}"><i class="fas fa-file-download"></i></a>
 
-                </td>
-            </tr>
-        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
 
-        </tbody>
-    </table>
+        </div>
     </div>
 
 
