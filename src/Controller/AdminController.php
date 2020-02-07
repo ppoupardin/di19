@@ -33,6 +33,10 @@ class AdminController extends AbstractController {
         //liste User (Gestion utilisateurs)
         $listUser = $user->SqlGetAllActiveUser(Bdd::GetInstance());
 
+        // Génération d'un TOKEN
+        $token = bin2hex(random_bytes(32));
+        $_SESSION['token'] = $token;
+
         return $this->twig->render('Admin/index_admin.html.twig', [
             //contenu du fichier css envoyé dans la vue
             'cssFileData' => $dataCss
@@ -41,6 +45,7 @@ class AdminController extends AbstractController {
             ,'listArticle' => $listArticle
             ,'listUser' => $listUser
             ,'articleList' => $articleList
+            ,"token" => $token
         ]);
     }
 

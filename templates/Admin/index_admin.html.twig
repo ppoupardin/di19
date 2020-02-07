@@ -25,9 +25,11 @@
                             <td class="row">
                                 <a href="/Article/Show/{{ article.id }}" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                 <form action="/Article/Accept/{{  article.id }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
                                 </form>
                                 <form action="/Article/Refused/{{ article.id }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" name="deleteCategorie" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
@@ -57,11 +59,13 @@
                             <td>{{ mail.utimail }}</td>
                             <td>
                                 <form action="/User/Accept/{{ mail.iduti }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" name="" class="btn btn-success"><i class="fas fa-check"></i></button>
                                 </form>
                             </td>
                             <td>
                                 <form action="/User/Refused/{{ mail.iduti }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" name="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
@@ -117,11 +121,13 @@
                                     <option value="">Retirer tous les droits</option>
                                 </select>
                                 <form action="/User/update/{{ user.iduti }}" method="post" id="updateUser{{ user.iduti }}">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" class="btn btn-warning"><i class="far fa-edit"></i></button>
                                 </form>
                             </td>
                             <td class="text-center">
                                 <form action="/User/Banned/{{ user.iduti }}" method="post">
+                                    <input type="hidden" name="token" value="{{ token }}">
                                     <button type="submit" name="banUser" class="btn btn-danger"><i class="fas fa-user-slash"></i></button>
                                 </form>
                             </td>
