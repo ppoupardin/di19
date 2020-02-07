@@ -14,8 +14,8 @@ class ContactController extends AbstractController{
         parent::__construct();
         $this->transport = (new \Swift_SmtpTransport('smtp.mailtrap.io', 2525))
             //mon mailtrap encoyez pas tous des mails là
-            ->setUsername('ed56f41e29d67f')
-            ->setPassword('6d79a526116781');
+            ->setUsername('feeab93f4d43ee')//WILLIAM:ed56f41e29d67f
+            ->setPassword('a80f2ebfc4d211');//William:6d79a526116781
         $this->mailer = new \Swift_Mailer($this->transport);
 
     }

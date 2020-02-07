@@ -11,6 +11,7 @@ class UserController extends  AbstractController {
         unset($_SESSION['errorlogin']);
         return $this->twig->render('User/login.html.twig');
     }
+
     public function inscriptionForm(){
         unset($_SESSION['errorinscription']);
         unset($_SESSION['errorinscriptionhtml']);
@@ -20,6 +21,11 @@ class UserController extends  AbstractController {
 
     public function loginCheck()
     {
+        if($_POST['passforget']){
+            $_SESSION['errorlogin'] = "Oh mince.. C'est dommage ça !";
+            header('Location:/Login');
+            return;
+        }
 
         if (trim($_POST['email']) == '') {
             $_SESSION['errorlogin'] = "Veuillez entrer une adresse Email";

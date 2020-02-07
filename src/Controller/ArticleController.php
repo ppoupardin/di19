@@ -110,11 +110,6 @@ class ArticleController extends AbstractController {
                 return;
             }
 
-            if(($_POST['Description'])!=(trim($_POST['Description']))){
-                $_SESSION['errorarticleadd'] = "La description ne peut commencer ou finir par un espace";
-                header('Location:/Article/Add');
-                return;
-            }
             if(trim($_POST['Description']) != strip_tags(trim($_POST['Description']))) {
                 $_SESSION['errorarticleadd'] = "La description n'a pas une structure valide";
                 header('Location:/Article/Add');
@@ -152,6 +147,7 @@ class ArticleController extends AbstractController {
             // liste categories
             $categorie = new Categorie();
             $listCategorie = $categorie->SqlGetAll(Bdd::GetInstance());
+            unset($_SESSION['errorarticleadd']);
             return $this->twig->render('Article/add.html.twig',
                 [
                     'token' => $token
