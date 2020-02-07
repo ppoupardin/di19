@@ -22,8 +22,22 @@
                         <a href="/Article/Show/{{ article.id }}"><h3>{{ article.Titre }}</h3></a>
                         <p class="font-italic">{{ article.Description | slice(0, 300)}}.....</p>
                         <p class="font-italic float-right">{{ article.Auteur }}</p>
+                        {% set disponce = 0 %}
+                        {% for role in session.login.roles %}
+                            {% if (role =='redacteur') or (role =='administrateur')  %}
+                                {% if disponce == 0 %}
+                                {% set disponce = 1 %}
                         <a class="btn btn-warning" href="/Article/Update/{{ article.Id }}"><i class="fas fa-edit"></i></a>
+                                    {% endif %}
+                                {% endif %}
+                        {% endfor %}
+                        {% for role in session.login.roles %}
+                        {% if role =='administrateur' %}
                         <a class="btn btn-danger" href="/Article/Delete/{{ article.Id }}"><i class="far fa-trash-alt"></i></a>
+                            {% endif %}
+                        {% endfor %}
+
+
                     </div>
 
                     </div>
